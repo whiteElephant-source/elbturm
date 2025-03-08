@@ -104,10 +104,16 @@
         }
     </style>
     <script>
-        function showPopup(text, mediaUrl, isVideo=false) {
+        function showPopup(text, mediaUrl, isVideo = false, additionalText = '') {
             var popup = document.createElement('div');
             popup.className = 'popup';
-            popup.innerHTML = '<div class="close-btn" onclick="this.parentElement.style.display=\'none\';">x</div>' + '<p class="popup-text">' + text + '</p>';
+            
+            // Construct the popup content
+            popup.innerHTML = 
+                '<div class="close-btn" onclick="this.parentElement.style.display=\'none\';">x</div>' +
+                '<p class="popup-text">' + text + '</p>'; // Main text above media
+
+            // Check if media (image or video) exists
             if (mediaUrl) {
                 if (isVideo) {
                     popup.innerHTML += '<video class="media-video" src="' + mediaUrl + '" controls autoplay></video>';
@@ -115,14 +121,23 @@
                     popup.innerHTML += '<img class="media-image" src="' + mediaUrl + '" alt="Image">';
                 }
             }
+
+            // Add the new text below the media dynamically
+            if (additionalText) {
+                popup.innerHTML += '<p class="popup-text">' + additionalText + '</p>';
+            }
+
+            // Append the popup to the document
             document.body.appendChild(popup);
 
+            // Set popup display and initial position
             popup.style.display = 'block';
             popup.style.top = '50px';
             popup.style.left = '50px';
 
+            // Enable drag functionality for the popup
             popup.addEventListener('mousedown', startDrag);
-            popup.addEventListener('mouseup', function() {
+            popup.addEventListener('mouseup', function () {
                 document.removeEventListener('mousemove', movePopup);
             });
         }
@@ -212,11 +227,11 @@
             });
         }
 
-        function highlightWord(word, text, mediaUrl, isVideo=false) {
+        function highlightWord(word, text, mediaUrl, isVideo=false, additionalText = '') {
             var content = document.querySelector('.content');
             var regex = new RegExp('\\b' + word + '\\b', 'gi');
             content.innerHTML = content.innerHTML.replace(regex, function (matched) {
-                return '<span class="highlight" onclick="showPopup(\'' + text + '\', \'' + mediaUrl + '\', ' + isVideo + ')">' + matched + '</span>';
+                return '<span class="highlight" onclick="showPopup(\'' + text + '\', \'' + mediaUrl + '\', ' + isVideo + ', \'' + additionalText + '\')">' + matched + '</span>';
             });
         }
 
@@ -238,7 +253,7 @@
 
         // Highlight the words and set their popup content
         document.addEventListener('DOMContentLoaded', function() {
-            highlightWord('Elbtower', ETContent, ETMediaUrl, ETIsVideo);
+            highlightWord('Elbtower', ETContent, ETMediaUrl, ETIsVideo, 'Elbtower: Additional information here.');
             highlightWord('Schwabenlandtower', SLTContent, SLTMediaUrl, SLTIsVideo);
         });
     </script>
