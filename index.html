@@ -72,6 +72,17 @@
             font-size: 1em; /* Changeable font size */
             text-align: left; /* Default alignment */
         }
+        .clickable {
+            text-decoration: none;
+            color: rgb(0, 0, 0);
+            cursor: pointer;
+            font-weight: bold; /* Optional - to emphasize */
+            font-style: italic; /* Make text italic */
+        }
+        .clickable:hover {
+            text-decoration: underline;
+            color: rgb(0, 0, 255); /* Change color on hover */
+        }
         .contact-link, .links-link {
             position: absolute;
             top: 10px;
@@ -162,15 +173,37 @@
         function showContactPopup() {
             var contactPopup = document.createElement('div');
             contactPopup.className = 'contact-popup';
-            contactPopup.innerHTML = '<div class="close-btn" onclick="this.parentElement.style.display=\'none\';">x</div>' + '<p>bio:</p><p>mail</p><p>instagram</p>';
+            
+            // Add content dynamically
+            contactPopup.innerHTML = `
+                <div class="close-btn" onclick="this.parentElement.style.display='none';">x</div>
+                <p>
+                    <span class="clickable" data-link="https://www.instagram.com/lida_freu">Lida Freudenreich</span>, 
+                    born in 2000, loves steel trade routes and the arctic. 
+                    <span class="clickable" data-link="https://www.instagram.com/kasparzilian">Kaspar Zilian</span>, 
+                    born in 1998, loves overcomplicated analogies and ornaments. Together they are working on a free diploma on burdens.
+                </p>
+                <p>
+                    maybe send us a <span class="clickable" data-link="mailto:zilianfreudenreich@gmail.com">mail</span>
+                </p>
+            `;
+
             document.body.appendChild(contactPopup);
+
+            // Add event listeners to clickable elements
+            var clickableElements = contactPopup.querySelectorAll('.clickable');
+            clickableElements.forEach(function (element) {
+                element.addEventListener('click', function () {
+                    window.open(this.dataset.link, '_blank'); // Open link in a new tab
+                });
+            });
 
             contactPopup.style.display = 'block';
             contactPopup.style.top = '50px';
             contactPopup.style.left = '50px';
 
             contactPopup.addEventListener('mousedown', startDragContact);
-            contactPopup.addEventListener('mouseup', function() {
+            contactPopup.addEventListener('mouseup', function () {
                 document.removeEventListener('mousemove', moveContactPopup);
             });
         }
@@ -195,17 +228,30 @@
         function showLinksPopup() {
             var linksPopup = document.createElement('div');
             linksPopup.className = 'links-popup';
-            linksPopup.innerHTML = '<div class="close-btn" onclick="this.parentElement.style.display=\'none\';">x</div>' +
-                                   '<p><a href="https://example.com/download" target="_blank">download_a</a></p>' +
-                                   '<p><a href="https://example.com/website" target="_blank">website_a</a></p>';
+
+            // Add content dynamically using "clickable" spans
+            linksPopup.innerHTML = `
+                <div class="close-btn" onclick="this.parentElement.style.display='none';">x</div>
+                <p><span class="clickable" data-link="https://example.com/download">download_a</span></p>
+                <p><span class="clickable" data-link="https://example.com/website">website_a</span></p>
+            `;
+
             document.body.appendChild(linksPopup);
+
+            // Add event listeners to clickable elements
+            var clickableElements = linksPopup.querySelectorAll('.clickable');
+            clickableElements.forEach(function (element) {
+                element.addEventListener('click', function () {
+                    window.open(this.dataset.link, '_blank'); // Open link in a new tab
+                });
+            });
 
             linksPopup.style.display = 'block';
             linksPopup.style.top = '50px';
             linksPopup.style.left = '50px';
 
             linksPopup.addEventListener('mousedown', startDragLinks);
-            linksPopup.addEventListener('mouseup', function() {
+            linksPopup.addEventListener('mouseup', function () {
                 document.removeEventListener('mousemove', moveLinksPopup);
             });
         }
