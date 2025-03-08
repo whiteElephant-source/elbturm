@@ -38,6 +38,7 @@
             width: 300px; /* Fixed width */
             height: 500px; /* Fixed height */
             overflow: auto; /* Content scrolls if it exceeds the fixed dimensions */
+            resize: both; 
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Slightly stronger shadow for emphasis */
         }
         .popup::-webkit-scrollbar {
@@ -163,8 +164,21 @@
 
         function startDrag(event) {
             var popup = event.target.closest('.popup');
-            var offsetX = event.clientX - popup.getBoundingClientRect().left;
-            var offsetY = event.clientY - popup.getBoundingClientRect().top;
+            var rect = popup.getBoundingClientRect();
+            
+            // Check if the mouse is near the bottom-right corner for resizing
+            var nearResizeCorner = (
+                event.clientX > rect.right - 20 && // Near the right edge
+                event.clientY > rect.bottom - 20 // Near the bottom edge
+            );
+
+            // Prevent dragging if near the resize corner
+            if (nearResizeCorner) {
+                return;
+            }
+
+            var offsetX = event.clientX - rect.left;
+            var offsetY = event.clientY - rect.top;
 
             function movePopup(event) {
                 popup.style.top = (event.clientY - offsetY) + 'px';
@@ -173,7 +187,7 @@
 
             document.addEventListener('mousemove', movePopup);
 
-            popup.addEventListener('click', function() {
+            popup.addEventListener('mouseup', function () {
                 document.removeEventListener('mousemove', movePopup);
             });
         }
