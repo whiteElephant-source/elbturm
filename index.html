@@ -27,19 +27,18 @@
             background-color: white;
             cursor: pointer;
         }
-        .popup, .contact-popup, .links-popup {
+        .popup {
             display: none;
             position: fixed;
             padding: 10px;
             border-radius: 8px;
             z-index: 1000;
-        }
-        .popup {
             background: black;
             color: white;
-            width: 600px;
-            height: 400px;
-            overflow: auto; /* Make content scrollable */
+            width: 600px; /* Fixed width */
+            height: 400px; /* Fixed height */
+            overflow: auto; /* Content scrolls if it exceeds the fixed dimensions */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Slightly stronger shadow for emphasis */
         }
         .popup::-webkit-scrollbar {
             display: none; /* Hide scrollbar */
@@ -49,10 +48,19 @@
             height: auto;
         }
         .contact-popup, .links-popup {
+            display: none;
+            position: fixed;
+            padding: 10px;
+            border-radius: 8px;
+            z-index: 1000;
             background: white;
             color: black;
-            width: 300px;
-            height: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 300px; /* Add a max width to prevent overflowing */
+            max-height: 200px; /* Add a max height for longer content */
+            overflow: auto; /* Allow scrolling for large content */
+            width: auto; /* Dynamically adjusts to content */
+            height: auto; /* Dynamically adjusts to content */
         }
         .popup .close-btn, .contact-popup .close-btn, .links-popup .close-btn {
             position: absolute;
