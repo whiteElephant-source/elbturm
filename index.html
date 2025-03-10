@@ -401,6 +401,8 @@
         // Adding new popup content here
         var sqmFileUrl = 'texts/100200m2.txt';
 
+        var millionMediaUrl = 'images/million.webp';
+
         var percentFileUrl = 'texts/30percent.txt';
 
         var standardsFileUrl = 'texts/buildingstandards.txt';
@@ -446,6 +448,10 @@
         });
         document.addEventListener('DOMContentLoaded', function () {
             highlightBasicPopup('Schwabenlandtower', 'images/slt01.webp', false, 'Additional information about Schwabenlandtower.');
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            highlightBasicPopup('xxx million euros', 'images/million.webp', false, 'here we add a cool table of all calculations');
         });
 
         // Adding new Highlight Functions here
