@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elbturm</title>
+    <link rel="icon" href="path/to/your/favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            overflow: hidden;
+        }
+        .content {
+            background: rgb(255, 0, 0);
+            color: white;
+            height: 100vh;
+            overflow-y: scroll;
+            padding: 20px;
+        }
+        .content::-webkit-scrollbar {
+            display: none;
+        }
+        .highlight {
+            color: black;
+            background-color: white;
+            cursor: pointer;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            padding: 10px;
+            border-radius: 8px;
+            z-index: 1000;
+            background: black;
+            color: white;
+            width: 600px; /* Fixed width */
+            height: 400px; /* Fixed height */
+            overflow: auto; /* Content scrolls if it exceeds the fixed dimensions */
+            resize: both;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Slightly stronger shadow for emphasis */
+        }
+        .popup::-webkit-scrollbar {
+            display: none; /* Hide scrollbar */
+        }
+        .popup img, .popup video {
+            width: 100%;
+            height: auto;
+        }
+        .contact-popup, .links-popup {
+            display: none;
+            position: fixed;
+            padding: 10px;
+            border-radius: 8px;
+            z-index: 1000;
+            background: white;
+            color: black;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 300px; /* Add a max width to prevent overflowing */
+            max-height: 300px; /* Add a max height for longer content */
+            overflow: auto; /* Allow scrolling for large content */
+            width: 300px; /* Dynamically adjusts to content */
+            height: auto; /* Dynamically adjusts to content */
+        }
+        .popup .close-btn, .contact-popup .close-btn, .links-popup .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            cursor: pointer;
+        }
+        .title-text {
+            font-size: 5em; /* Changeable font size */
+            text-align: left; /* Default alignment */
+        }
+        .regular-text {
+            font-size: 3em; /* Changeable font size */
+            text-align: left; /* Default alignment */
+        }
+        .popup-text {
+            font-family: 'Arial', sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: pre-wrap; /* Ensures line breaks and spacing are preserved */
+            word-wrap: break-word; /* Breaks long words to prevent horizontal overflow */
+            margin: 0; /* Removes any default margin */
+        }
+        .clickable {
+            text-decoration: none;
+            color: rgb(0, 0, 0);
+            cursor: pointer;
+            font-weight: bold; /* Optional - to emphasize */
+            font-style: italic; /* Make text italic */
+        }
+        .clickable:hover {
+            text-decoration: underline;
+            color: rgb(0, 0, 255); /* Change color on hover */
+        }
+        .contact-link, .links-link {
+            position: absolute;
+            top: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        .contact-link {
+            right: calc(30px + var(--spacing, 10px)); /* Adjusted indentation with spacing */
+        }
+        .links-link {
+            right: 30px;
+        }
+        .media-container {
+            margin-top: 20px;
+        }
+        .media-image {
+            width: 100%;
+            height: auto;
+        }
+        .media-video {
+            width: 100%;
+            height: auto;
+        }
+        .align-buttons {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+    <script>
+                // Advanced Popup: Includes fetch for text, media, and additional text
+        function highlightAdvancedPopup(word, fileUrl, mediaUrl = '', isVideo = false, additionalText = '') {
+            var content = document.querySelector('.content');
+            var regex = new RegExp('\\b' + word + '\\b', 'gi');
+
+            content.innerHTML = content.innerHTML.replace(regex, function (matched) {
+                return '<span class="highlight" onclick="showAdvancedPopup(\'' + fileUrl + '\', \'' + mediaUrl + '\', ' + isVideo + ', \'' + additionalText + '\')">' + matched + '</span>';
+            });
+        }
+
+        function showAdvancedPopup(fileUrl, mediaUrl, isVideo, additionalText) {
+            var popup = document.createElement('div');
+            popup.className = 'popup';
+            popup.innerHTML = '<div class="close-btn" onclick="this.parentElement.style.display=\'none\';">x</div>';
+            document.body.appendChild(popup);
+
+            // Fetch content from a text file
+            fetch(fileUrl)
+                .then(response => response.text())
+                .then(data => {
+                    // Add the fetched text
+                    popup.innerHTML += '<pre class="popup-text">' + data + '</pre>';
+                })
+                .catch(error => {
+                    console.error('Error fetching file:', error);
+                    popup.innerHTML += '<p class="error">Failed to load content. Please try again later.</p>';
+                });
+
+            // Add media (image or video)
+            if (mediaUrl) {
+                if (isVideo) {
+                    popup.innerHTML += '<video class="media-video" src="' + mediaUrl + '" controls autoplay></video>';
+                } else {
+                    popup.innerHTML += '<img class="media-image" src="' + mediaUrl + '" alt="Image">';
+                }
+            }
+
+            // Add additional text
+            if (additionalText) {
+                popup.innerHTML += '<p class="popup-text">' + additionalText + '</p>';
+            }
+
+            popup.style.display = 'block';
+            popup.style.top = '50px';
+            popup.style.left = '50px';
+            popup.style.resize = 'both'; // Enable resizing for the advanced popup
+            popup.style.overflow = 'auto'; // Ensure scrollability
+            popup.addEventListener('mousedown', startDragAdvanced);
+        }
+
+        // Basic Popup: Only media and additional text
+        function highlightBasicPopup(word, mediaUrl = '', isVideo = false, additionalText = '') {
+            var content = document.querySelector('.content');
+            var regex = new RegExp('\\b' + word + '\\b', 'gi');
+
+            content.innerHTML = content.innerHTML.replace(regex, function (matched) {
+                return '<span class="highlight" onclick="showBasicPopup(\'' + mediaUrl + '\', ' + isVideo + ', \'' + additionalText + '\')">' + matched + '</span>';
+            });
+        }
+
+        function showBasicPopup(mediaUrl, isVideo, additionalText) {
+            var popup = document.createElement('div');
+            popup.className = 'popup';
+            popup.innerHTML = '<div class="close-btn" onclick="this.parentElement.style.display=\'none\';">x</div>';
+            document.body.appendChild(popup);
+
+            // Add media (image or video)
+            if (mediaUrl) {
+                if (isVideo) {
+                    popup.innerHTML += '<video class="media-video" src="' + mediaUrl + '" controls autoplay></video>';
+                } else {
+                    popup.innerHTML += '<img class="media-image" src="' + mediaUrl + '" alt="Image">';
+                }
+            }
+
+            // Add additional text
+            if (additionalText) {
+                popup.innerHTML += '<p class="popup-text">' + additionalText + '</p>';
+            }
+
+            popup.style.display = 'block';
+            popup.style.top = '50px';
+            popup.style.left = '50px';
+            popup.style.resize = 'both'; // Enable resizing for the basic popup
+            popup.style.overflow = 'auto'; // Ensure scrollability
+            popup.addEventListener('mousedown', startDragBasic);
+        }
+
+        function startDragAdvanced(event) {
+            var popup = event.target.closest('.popup');
+            if (!popup) return; // Ensure the popup exists
+
+            var rect = popup.getBoundingClientRect();
+            var offsetX = event.clientX - rect.left;
+            var offsetY = event.clientY - rect.top;
+
+            // Check if resizing (near bottom-right corner)
+            var isResizing = (event.clientX > rect.right - 20 && event.clientY > rect.bottom - 20);
+
+            function movePopup(event) {
+                if (isResizing) {
+                    // Handle resizing
+                    popup.style.width = Math.max(event.clientX - rect.left, 100) + 'px'; // Minimum width: 100px
+                    popup.style.height = Math.max(event.clientY - rect.top, 100) + 'px'; // Minimum height: 100px
+                } else {
+                    // Handle dragging
+                    popup.style.top = (event.clientY - offsetY) + 'px';
+                    popup.style.left = (event.clientX - offsetX) + 'px';
+                }
+            }
+
+            function stopPopupActions() {
+                document.removeEventListener('mousemove', movePopup);
+                document.removeEventListener('mouseup', stopPopupActions);
+            }
+
+            document.addEventListener('mousemove', movePopup);
+            document.addEventListener('mouseup', stopPopupActions);
+        }
+
+        function startDragBasic(event) {
+            var popup = event.target.closest('.popup');
+            if (!popup) return; // Ensure the popup exists
+
+            var rect = popup.getBoundingClientRect();
+            var offsetX = event.clientX - rect.left;
+            var offsetY = event.clientY - rect.top;
+
+            // Check if resizing (near bottom-right corner)
+            var isResizing = (event.clientX > rect.right - 20 && event.clientY > rect.bottom - 20);
+
+            function movePopup(event) {
+                if (isResizing) {
+                    // Handle resizing
+                    popup.style.width = Math.max(event.clientX - rect.left, 100) + 'px'; // Minimum width: 100px
+                    popup.style.height = Math.max(event.clientY - rect.top, 100) + 'px'; // Minimum height: 100px
+                } else {
+                    // Handle dragging
+                    popup.style.top = (event.clientY - offsetY) + 'px';
+                    popup.style.left = (event.clientX - offsetX) + 'px';
+                }
+            }
+
+            function stopPopupActions() {
+                document.removeEventListener('mousemove', movePopup);
+                document.removeEventListener('mouseup', stopPopupActions);
+            }
+
+            document.addEventListener('mousemove', movePopup);
+            document.addEventListener('mouseup', stopPopupActions);
+        }
+
+        function showContactPopup() {
+            var contactPopup = document.createElement('div');
+            contactPopup.className = 'contact-popup';
+            
+            // Add content dynamically
+            contactPopup.innerHTML = `
+                <div class="close-btn" onclick="this.parentElement.style.display='none';">x</div>
+                <p>
+                    <span class="clickable" data-link="https://www.instagram.com/lida_freu">Lida Freudenreich</span>, 
+                    born in 2000, loves steel trade routes and the arctic. 
+                    <span class="clickable" data-link="https://www.instagram.com/kasparzilian">Kaspar Zilian</span>, 
+                    born in 1998, loves overcomplicated analogies and ornaments. Together they are working on a free diploma on burdens.
+                </p>
+                <p>
+                    maybe send us a <span class="clickable" data-link="mailto:zilianfreudenreich@gmail.com">mail</span>
+                </p>
+            `;
+
+            document.body.appendChild(contactPopup);
+
+            // Add event listeners to clickable elements
+            var clickableElements = contactPopup.querySelectorAll('.clickable');
+            clickableElements.forEach(function (element) {
+                element.addEventListener('click', function () {
+                    window.open(this.dataset.link, '_blank'); // Open link in a new tab
+                });
+            });
+
+            contactPopup.style.display = 'block';
+            contactPopup.style.top = '50px';
+            contactPopup.style.left = '50px';
+
+            contactPopup.addEventListener('mousedown', startDragContact);
+            contactPopup.addEventListener('mouseup', function () {
+                document.removeEventListener('mousemove', moveContactPopup);
+            });
+        }
+
+        function startDragContact(event) {
+            var contactPopup = event.target.closest('.contact-popup');
+            var offsetX = event.clientX - contactPopup.getBoundingClientRect().left;
+            var offsetY = event.clientY - contactPopup.getBoundingClientRect().top;
+
+            function moveContactPopup(event) {
+                contactPopup.style.top = (event.clientY - offsetY) + 'px';
+                contactPopup.style.left = (event.clientX - offsetX) + 'px';
+            }
+
+            document.addEventListener('mousemove', moveContactPopup);
+
+            contactPopup.addEventListener('click', function() {
+                document.removeEventListener('mousemove', moveContactPopup);
+            });
+        }
+
+        function showLinksPopup() {
+            var linksPopup = document.createElement('div');
+            linksPopup.className = 'links-popup';
+
+            // Add content dynamically using "clickable" spans
+            linksPopup.innerHTML = `
+                <div class="close-btn" onclick="this.parentElement.style.display='none';">x</div>
+                <p><span class="clickable" data-link="https://example.com/download">download_a is not available yet</span></p>
+                <p><span class="clickable" data-link="https://example.com/website">website_a</span></p>
+            `;
+
+            document.body.appendChild(linksPopup);
+
+            // Add event listeners to clickable elements
+            var clickableElements = linksPopup.querySelectorAll('.clickable');
+            clickableElements.forEach(function (element) {
+                element.addEventListener('click', function () {
+                    window.open(this.dataset.link, '_blank'); // Open link in a new tab
+                });
+            });
+
+            linksPopup.style.display = 'block';
+            linksPopup.style.top = '50px';
+            linksPopup.style.left = '50px';
+
+            linksPopup.addEventListener('mousedown', startDragLinks);
+            linksPopup.addEventListener('mouseup', function () {
+                document.removeEventListener('mousemove', moveLinksPopup);
+            });
+        }
+
+        function startDragLinks(event) {
+            var linksPopup = event.target.closest('.links-popup');
+            var offsetX = event.clientX - linksPopup.getBoundingClientRect().left;
+            var offsetY = event.clientY - linksPopup.getBoundingClientRect().top;
+
+            function moveLinksPopup(event) {
+                linksPopup.style.top = (event.clientY - offsetY) + 'px';
+                linksPopup.style.left = (event.clientX - offsetX) + 'px';
+            }
+
+            document.addEventListener('mousemove', moveLinksPopup);
+
+            linksPopup.addEventListener('click', function() {
+                document.removeEventListener('mousemove', moveLinksPopup);
+            });
+        }
+
+        function changeTextAlignment(className, alignment) {
+            var textBlocks = document.querySelectorAll('.' + className);
+            textBlocks.forEach(function (block) {
+                block.style.textAlign = alignment;
+            });
+        }
+
+        // Define popup content separately
+        var ETFileUrl = 'texts/elbtower.txt';
+        var ETMediaUrl = 'images/elbtower02.webp'; // Update to the correct path
+        var ETIsVideo = false; // Set to true if it's a video
+
+        var SLTMediaUrl = 'images/slt01.webp'; // Set to .mp4 if it's a video
+        var SLTIsVideo = false; // Set to true if it's a video
+
+        // Adding new popup content here
+        var sqmFileUrl = 'texts/100200m2.txt';
+
+        var percentFileUrl = 'texts/30percent.txt';
+
+        var standardsFileUrl = 'texts/buildingstandards.txt';
+
+        var facadeFileUrl = 'texts/facade.txt';
+
+        var dealFileUrl = 'texts/gooddeal.txt';
+
+        var landFileUrl = 'texts/landbanking.txt';
+
+        var vacancyFileUrl = 'texts/vacancy.txt';
+
+        var mileurosFileUrl = 'texts/xxxmillioneuros.txt';
+
+        var eurosFileUrl = 'texts/xxxeuros.txt';
+
+        var zonedFileUrl = 'texts/zoned.txt';
+
+        var repurchaseFileUrl = 'texts/zoned.txt';
+
+        var siteFileUrl = 'texts/site.txt';
+
+        var brightFileUrl = 'texts/buildingright.txt';
+
+        var debtsFileUrl = 'texts/debts.txt';
+
+        var genericFileUrl = 'texts/generic.txt';
+
+        var risksFileUrl = 'texts/risks.txt';
+
+
+
+        // Highlight the words and set their popup content
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightAdvancedPopup('Elbtower', 'texts/elbtower.txt', 'images/elbtower02.webp', false, '');
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            highlightBasicPopup('Schwabenlandtower', 'images/slt01.webp', false, 'Additional information about Schwabenlandtower.');
+        });
+
+        // Adding new Highlight Functions here
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightAdvancedPopup('100,200 m2', 'texts/100200m2.txt', '', false, '');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightAdvancedPopup('30% will be housing, 30% non-housing and 40% public', 'texts/30percent.txt', 'images/image.jpg', false, '');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightAdvancedPopup('xxx million euros', 'texts/texts/xxxmillioneuros.txt', 'images/image.jpg', false, '');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightAdvancedPopup('façade', 'texts/facade.txt', '', false, '');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightAdvancedPopup('building standards', 'texts/buildingstandards.txt', '', false, '');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightAdvancedPopup('good deal', 'texts/gooddeal.txt', '', false, '');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightAdvancedPopup('zoned', 'texts/zoned.txt', '', false, '');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightAdvancedPopup('vacancy', 'texts/vacancy.txt', '', false, '');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightAdvancedPopup('xxx euros', 'texts/xxxeuros.txt', '', false, '');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightAdvancedPopup('repurchase', 'texts/repurchase.txt', '', false, '');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightAdvancedPopup('site', 'texts/site.txt', 'images/image.jpg', false, '');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightAdvancedPopup('heritable building right', 'texts/buildingright.txt', '', false, '');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightAdvancedPopup('prevent the city from becoming generic and bland', 'texts/generic.txt', '', false, '');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightAdvancedPopup('debts', 'texts/debts.txt', '', false, '');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightAdvancedPopup('risks', 'texts/risks.txt', '', false, '');
+        });
+
+    </script>
+</head>
+<body style="--spacing: 40px;">
+    <div class="contact-link" onclick="showContactPopup()">contact</div>
+    <div class="links-link" onclick="showLinksPopup()">links</div>
+    <div class="content">
+        <h1 class="title-text">Elbturm</h1> 
+        <p class="regular-text">
+            In 2025, the city of Hamburg will grow by around 100,200 m2. These additional areas need to be developed. Hamburg will therefore invest xxx million euros to extend the city's infrastructure and ensure connections to electricity, water and sewage. These areas will be removed from speculation and become part of urban reality again.
+By building a façade, a protective layer is created. Behind it thus: air that can be used, space that can be owned.
+Within anything can be realized. Bedrooms can be the size of a bed and kitchens, studies, living rooms can expand. Building standards no longer play a role within the walls of a home.
+    <div class="media-container">
+        <img class="media-image" src="images/elbtower01.webp" alt="***">
+    </div>
+    <div class="media-container">
+        <p class="regular-text">
+            We are talking about the Elbtower. An unfinished office building situated prominently  at the entrance to Hamburg on an island in the Elbe. Hamburg can buy back the site including the built mass worth over 300 million euros for the original selling price - minus a security: 117 million euros for 100,200m2 is a good deal.
+The area will be zoned and redistributed via the hereditary building right. A type of land allocation that already exists. The annual returns, about xxx euros, flow back into maintenance and upkeep.
+        </p>
+    </div>
+    <div class="media-container">
+        <p class="title-text">30% will be housing, 30% non-housing and 40% public.</h1>
+        </p>
+    </div>
+    <div class="media-container">
+        <img class="media-image" src="images/name.jpg" alt="***">
+    </div>
+    <div class="media-container">
+        <p class="title-text">Space is an essential resource it cannot be a commodity.</h1>
+        </p>
+    </div>       
+    <div class="media-container">
+        <img class="media-image" src="images/name.jpg" alt="***">
+    </div>
+    <div class="media-container">
+        <p class="regular-text">
+            As a result of artificially created demand, the vacancy rate for office buildings in Hamburg is currently 6.6 %. This is 2 % higher than the German average. At the same time, there is a shortage of living space.
+If we want to prevent the city from becoming generic and bland, real needs and real users can no longer be pushed aside.
+Landbanking should be abolished.
+At the beginning of the 21st century, Germany privatized a large part of its remaining housing stock. Today, 94% of housing is part of the private sector. In order to keep pace with the private market, Hamburg has become private itself. This enables it to take credits, generate returns, make profits and reinvest.
+In the end, however, debts and risks are always secured by the state. The separation of the private market and the state has been purely fictitious for as long as debt has existed, i.e. since time immemorial.
+        </p>
+    </div>
+    <div class="media-container">
+        <img class="media-image" src="path/to/your/image.jpg" alt="This image is not loaded yet">
+    </div>
+    <div class="media-container">
+        <p class="regular-text">
+            Cycles of speculation have mutually amplified each other. The current real estate crisis can no longer be ignored, nor countered by the measures that have lead to it. The Elbtower and the Schwabenlandtower are two of many examples where system failure reveals itself.
+Precisely because speculation is based on scarcity, it has produced half-finished spaces in the wrong places. These failed projects are a burden. However, what failed is not necessarily the building itself, but the abstract financial mechanisms that stand behind it. The unfinished structure can become something that is not yet there, that hasn't even been thought of.
+        </p>
+    </div>
+    <div class="media-container">
+        <p class="title-text">An empty tower is land.</h1>
+        </p>
+    </div>
+    <div class="media-container">
+        <p class="title-text">A burden is a chance.</h1>
+        </p>
+    </div>
+    <div class="media-container">
+        <p class="title-text">An unfinished house is a home.</h1>
+        </p>
+    </div>  
+</body>
+</html>
