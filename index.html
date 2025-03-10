@@ -429,7 +429,16 @@
 
         var risksFileUrl = 'texts/risks.txt';
 
+        var stateFileUrl = 'texts/state.txt';
 
+        var valueFileUrl = 'texts/value.txt';
+
+        var failureFileUrl = 'texts/failure.txt';
+
+        var mechanismsFileUrl = 'texts/mechanisms.txt';
+
+        var unfinishedFileUrl = 'texts/unfinished.txt';
+        
 
         // Highlight the words and set their popup content
         document.addEventListener('DOMContentLoaded', function() {
@@ -494,6 +503,26 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             highlightAdvancedPopup('risks', 'texts/risks.txt', '', false, '');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightAdvancedPopup('separation of the private market and the state', 'texts/state.txt', '', false, '');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightAdvancedPopup('value', 'texts/value.txt', '', false, '');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightAdvancedPopup('failure', 'texts/failure.txt', '', false, '');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightAdvancedPopup('financial mechanisms', 'texts/mechanisms.txt', '', false, '');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightAdvancedPopup('unfinished', 'texts/unfinished.txt', '', false, '');
         });
 
     </script>
