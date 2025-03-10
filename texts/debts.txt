@@ -1,0 +1,43 @@
+Debt and Crisis: The Case of Signa Holding:
+​​GmbH Regelung Österreich: System
+Austria’s GmbHG (limited liability company law), defines prerequisites and obligations for the around 93‘000 GmbH’s registered in the country. The regulation differentiates companies which count as “small” and ones that are considered “large”. 
+“Kleine Kapitalgesellschaften brauchen nur die Bilanz und den Anhang einzureichen. Bei ihnen kann also die Gewinn- und Verlustrechnung fehlen; entsprechend kann der Anhang um die die Gewinn- und Verlustrechnung betreffenden Angaben gekürzt werden (§ 326 HGB)”
+GmbH’s which are considered small are not required to present a profit and loss statement, annual financial statements and are not obliged to have a supervisory board to overview their strategies and transactions. 
+
+Based on the § 221 Abs. 1 UGB: A cooperation is counted as small if two of the three points are not surpassed:
+
+	If it has less than 10 Mio Euro sales Volume per year
+	If it has less than 50 employees
+	If it has less than 5 Mio in total assets (1)
+
+Signa Holding counted as a small corporation with far more than five million euros in total assets. The company consisted of around 40 employees and had an official sales volume of zero. This only works on paper as the company was split up, again and again. Signa Holding operated close to 1000 subsidiaries, all of which were registered as small GmbH’s. In a shared network they were moving around employees, sharing costs and assets. 
+They invented something called «Beirat» and many other fictional parties to give the impression of a well kept company structure. By staying within the private sector, instead of working on public projects the company‘s capability has only been confirmed through the projected profit of other projects and balance sheets from private bank accounts.
+And even though a holding, a parent company is obliged to consolidate the financial statements of their subsidiaries by EU Law, Signa managed to evade their responsibility by not owning more than 50 percent of each splinter company. By only owning a share of up to 20 percent of each subsidiary, Signa Holding GmbH was freed of any statements. By avoiding transparency, they complicated not only efforts to repay debt holders but also clouded transactions within the splintered company structure. 
+Grey Area Exploitation
+Grey area refers to a situation, topic, or issue that is not clearly defined, where the distinction between right and wrong, or legal and illegal, is unclear. Grey areas are often deliberately exploited. This refers to situations where individuals or organisations take advantage of vague or ambiguous regulations to engage in activities that may not be explicitly illegal but are ethically questionable or skirt the edge of legal boundaries. By operating in these unclear zones, companies or individuals can sometimes avoid stricter oversight or gain financial benefits without technically violating the law. However this practice often is volatile and can eventually lead to legal reform or tighter regulations to close these loopholes.
+
+State money to save the Galeria Kaufhof:
+While capital is accumulated, companies need enticing schemes to convince their security and vouch their profitability. Portfolio value, in the case of Singa, is created by artificially high rents.
+
+The value of a property generally depends on two factors: expected future rental income and interest rates on loans used to finance the property. 
+Signa Holding GmbH used overstated rents for a higher real estate evaluation and potential profit returns. The company had two main branches. One focused on real estate (A) and the other on retail business (B). In 2018, (B) acquired Galeria Kaufhof. However, (A), the real estate branch who owned the real estate in which Galeria Kaufhof is placed, increased rents for (B). This led to decreased profitability for the retail division. Simultaneously, (A)‘s rental income surged, boosting the investment value of its properties. (2)
+The higher rental income, paired with unchanged interest rates, artificially inflated the value of their properties on paper. This inflated value was then used as collateral for new loans, creating a cycle of increasing property values and loan acquisition. 
+Signa Prime Selection, a key subsidiary founded in 2010 with €750 million in real estate, saw its value rise by 2000% over the next decade through this mechanism. SIGNA Holding consistently refused to lower Galeria Kaufhof‘s rents to maintain high property values. Lowering rents would have devalued their real estate portfolio. Instead, Signa shuffled funds among its various holding companies keeping them barely alive.  (3)
+During the economic crisis in 2020, Signa’s rent scheme led to internal financing challenges for Galeria Kaufhof. Signa pressured the state to receive 460 million euros from the economic stabilisation fund, which in the end was paid out in full. They argued for the safety of jobs associated with the company which allowed them to cash in. This resulted in Signa Group not having to finance the Kaufhof’s restructuring process themselves and they were able to shuffle money over to their real estate branch. In Galerias’s case, tax money directly funded Signas portfolio rating. Shortly after receiving the funds, Signa Group sold Galeria Kaufhof with an internal profit of 450 million. (4)
+
+Case of the Elbtower
+In 2022, HCOB sold its old headquarters on Gerhart-Hauptmann-Platz to René Benko‘s company Signa shortly before the Elbtower was approved. According to research by the weekly newspaper «Die Zeit», Signa paid 220 million euros for the bank building. HCOB got an extremely advantageous deal. The price per square metre was 7‘333 euros. (in 2020, the square metre price for office buildings was situated at around a median of 3‘638 euros/m2 and a maximum of 7‘761 euros/m2. Today it lies at 2.682 euros/m2). (5) Signa would also have had to spend at least 2’000 euros per square metre to modernise the space. With 30’000m2 in total the modernization costs would have summed up to another 60 million euros. (6)
+During the sale procedures, HCOB described its old location as «technically outdated», partly because it did not «meet today‘s requirements for sustainable energy management». Part of the deal: HCOB agreed to lend Signa 166 million euros to finance the purchase. The interest rate for a loan in 2022 could be expected around 2%. 
+Signa Holding GmbH agreed to the deal with the addition of HCOB renting 11’000m2 of the upper floors of the Elbtower. The rent per square metre for these floors was projected to be 38 Euros/m2. Almost 13% more than the top rent in HafenCity. 
+Through this deal, by taking on debt with HCOB they managed to reach their pre-letting-rate that allowed them to start construction.
+Besides the high, even artificial, profitability, the projected value of real estate only keeps up if the interest rates stay within the expected trajectory.
+Between 2019 and 2023, interest rates went up by almost triple. Central banks sharply raised interest rates to counter an outburst of inflation caused by a spike in energy prices following Russia‘s invasion of Ukraine, and by clogged supply chains for parts and raw materials just  as the global economy bounced back from the COVID-19 pandemic.
+The financial economy often operates on a non numerical level. Leverages are therefore not only percentages but legal and strategic practices that often exploit in grey areas. 
+
+DEBT AND CRISIS
+1) Archive:
+2) https://berlinerinnen-gegen-signa.de/signa-gruppe-intransparenz-als-wichtiger-bestandteil-der-geschaeftsstrategie/#:~:text=750%20Millionen%20Euro%20aufgestockt%20hat,die%20Intransparenz%20der%20SIGNA%2DGruppe.
+3) Ibid.
+4) Ibid.
+5) Gutachterausschuss für Grundstückswerte in Hamburg, Immobilienmarktbericht Hamburg 2024
+6) https://www.handelsblatt.com/finanzen/immobilien/signa-krise-dubioser-doppel-deal-beim-elbtower/29529980.html
