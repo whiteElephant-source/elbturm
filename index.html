@@ -145,7 +145,7 @@
                 .then(response => response.text())
                 .then(data => {
                     // Add the fetched text
-                    popup.innerHTML += '<p class="popup-text">' + data + '</p>';
+                    popup.innerHTML += '<pre class="popup-text">' + data + '</pre>';
                 })
                 .catch(error => {
                     console.error('Error fetching file:', error);
