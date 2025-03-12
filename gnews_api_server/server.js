@@ -127,6 +127,9 @@ app.get('/news', async (req, res) => {
     res.json(limitedNews);
 });
 
+app.get('/', (req, res) => {
+    res.redirect('/news');
+});
 
 
 
