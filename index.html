@@ -81,7 +81,7 @@
                     const title = article.title || "No Title Available"; // Fallback if title is missing
                     const subtitle = article.description || "No Subtitle Available"; // Fallback if subtitle is missing
                     const url = article.url || "#";
-                    return `<a href="${url}" target="_blank" style="color: white; text-decoration: none;"><strong>${title}</strong></a>: ${subtitle}`;
+                    return `${index === 0 ? '+++ ' : ''}<a href="${url}" target="_blank"><strong>${title}</strong></a>: ${subtitle}`;
                 }).join(' +++ ');
         
                 // Set the inner HTML of the news ticker
