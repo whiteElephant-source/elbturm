@@ -9,7 +9,10 @@ const path = require('path');
 require('dotenv').config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});;
 const apiKey = process.env.GNEWS_API_KEY;
 const query = 'Elbtower'; // Change to your desired query
 const language = 'de'; // German news
