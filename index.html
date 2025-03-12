@@ -64,10 +64,11 @@
             height: auto; /* Dynamically adjusts to content */
         }
         .popup .close-btn, .contact-popup .close-btn, .links-popup .close-btn {
-            position: absolute;
-            top: 5px;
-            right: 10px;
+            position: absolute; /* Position relative to the popup */
+            top: 10px; /* Space from the top inside the popup */
+            right: 10px; /* Space from the right inside the popup */
             cursor: pointer;
+            z-index: 1100; /* Ensure it stays above the popup content */
         }
         .title-text {
             font-size: 5em; /* Changeable font size */
@@ -125,6 +126,9 @@
             margin-top: 10px;
             display: flex;
             gap: 10px;
+        }
+        .highlight:hover {
+            font-style: italic; /* Changes text to italic on hover */
         }
     </style>
     <script>
