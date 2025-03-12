@@ -86,9 +86,7 @@
         
                 // Set the inner HTML of the news ticker
                 newsBanner.innerHTML = `<div class="news-content">${newsText}</div>`;
-        
-                // Dynamically adjust animation timing based on content length
-                const contentWidth = newsBanner.scrollWidth; // Get the width of the entire content
+                const contentWidth = document.querySelector('.news-content-wrapper').scrollWidth;
                 const containerWidth = document.getElementById('news-ticker').offsetWidth; // Get the width of the visible box
                 const animationSpeed = Math.max(8, (contentWidth / containerWidth) * 8); // Adjust speed proportionally
                 document.querySelector('.news-content-wrapper').style.animationDuration = `${animationSpeed}s`;
