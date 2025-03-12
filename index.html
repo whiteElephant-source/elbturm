@@ -56,6 +56,8 @@
                 const response = await fetch('https://elbturm-gnews-api.onrender.com');
                 const articles = await response.json();
 
+                console.log(articles);
+
                 // Find the news-banner element
                 const newsBanner = document.getElementById('news-banner');
 
@@ -63,9 +65,10 @@
                 if (articles.length > 0) {
                     // Generate the ticker content by combining article titles and descriptions with a separator (e.g. "+++")
                     const newsText = articles.map(article => {
-                        const title = article.title ? article.title : "No Title Available";  // Fallback if title is missing
-                        const description = article.description ? article.description : "No Description Available";  // Fallback if description is missing
-                        const url = article.url ? article.url : "#";  // Fallback if URL is missing, links to a placeholder
+                        const title = article.title || "No Title Available";
+                        const description = article.description || "No Description Available";
+                        const url = article.url || "#";
+
 
                         // Wrap the title with an <a> tag to make it clickable
                         return `<a href="${url}" target="_blank"><strong>${title}</strong></a>: ${description}`;
@@ -74,20 +77,16 @@
                     // Add a separator before the first article as well
                     const formattedText = `+++ ${newsText}`;
 
-                    // Create a duplicate of the content to ensure continuous scrolling
-                    const newsContent = `<div class="news-content">${formattedText}</div>`;
-                    const duplicatedContent = `${newsContent}${newsContent}${newsContent}`; // Duplicate multiple times for seamless scrolling
-
                     // Set the inner HTML of the news ticker
                     newsBanner.innerHTML = articles.map(article => 
                         `<div class='news-item'><a href="${article.url}" target="_blank">${article.title}</a></div>`
-                    ).join(''
+                    ).join('');
 
                     // Adjust animation timing based on content length
                     const contentWidth = newsBanner.scrollWidth; // Get the width of the entire content
                     const containerWidth = document.getElementById('news-ticker').offsetWidth; // Get the width of the visible box
                     const animationSpeed = Math.max(15, (contentWidth / containerWidth) * 15); // Adjust speed proportionally
-                    document.querySelector('.news-content-wrapper').style.animationDuration = `${animationSpeed / 8}s`;
+                    document.querySelector('.news-content-wrapper').style.animationDuration = `${animationSpeed}s`;
                 } else {
                     // Display a message if no articles are found
                     newsBanner.innerHTML = "<div class='news-content'>No news available.</div>";
