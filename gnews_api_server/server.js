@@ -127,10 +127,7 @@ app.get('/news', async (req, res) => {
     res.json(limitedNews);
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-    fetchAndSaveNews(); // Fetch news on startup
-});
+
 
 
 
