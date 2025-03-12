@@ -1,5 +1,5 @@
-// env:
-  // GNEWS_API_KEY: ${{ secrets.GNEWS_API_KEY }}
+env:
+  GNEWS_API_KEY: ${{ secrets.GNEWS_API_KEY }}
 
 const express = require('express');
 const fetch = require('node-fetch');
