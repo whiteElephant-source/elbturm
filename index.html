@@ -3,6 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Ticker</title>
+    <style>
+        /* Ticker container styling */
+        #news-ticker {
+            width: 100%;
+            background: #000000;
+            color: white;
+            padding: 10px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            position: fixed;
+            bottom: 0;
+            font-weight: bold;
+            box-sizing: border-box;
+            z-index: 999; 
+        }
+
+        /* News content styling */
+        .news-content-wrapper {
+            display: flex;
+            animation: marquee 15s linear infinite; /* Default speed */
+        }
+
+        /* Make sure the content wraps without breaking */
+        .news-content {
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        /* Marquee animation for smooth scrolling */
+        @keyframes marquee {
+            0% {
+                transform: translateX(100%); /* Start outside the visible area */
+            }
+            100% {
+                transform: translateX(-100%); /* Move fully past the visible area */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- News Ticker -->
+    <div id="news-ticker">
+        <div class="news-content-wrapper" id="news-banner"></div>
+    </div>
+
+    <script>
+        async function fetchNews() {
+            try {
+                // Fetch the news data from the server
+                const response = await fetch('http://localhost:3000/news');
+                const articles = await response.json();
+
+                // Find the news-banner element
+                const newsBanner = document.getElementById('news-banner');
+
+                // Check if articles exist
+                if (articles.length > 0) {
+                    // Generate the ticker content by combining article titles and descriptions with a separator (e.g. "+++")
+                    const newsText = articles.map(article => {
+                        const title = article.title ? article.title : "No Title Available";  // Fallback if title is missing
+                        const description = article.description ? article.description : "No Description Available";  // Fallback if description is missing
+                        const url = article.url ? article.url : "#";  // Fallback if URL is missing, links to a placeholder
+
+                        // Wrap the title with an <a> tag to make it clickable
+                        return `<a href="${url}" target="_blank"><strong>${title}</strong></a>: ${description}`;
+                    }).join(' +++ ');
+
+                    // Add a separator before the first article as well
+                    const formattedText = `+++ ${newsText}`;
+
+                    // Create a duplicate of the content to ensure continuous scrolling
+                    const newsContent = `<div class="news-content">${formattedText}</div>`;
+                    const duplicatedContent = `${newsContent}${newsContent}${newsContent}`; // Duplicate multiple times for seamless scrolling
+
+                    // Set the inner HTML of the news ticker
+                    newsBanner.innerHTML = duplicatedContent;
+
+                    // Adjust animation timing based on content length
+                    const contentWidth = newsBanner.scrollWidth; // Get the width of the entire content
+                    const containerWidth = document.getElementById('news-ticker').offsetWidth; // Get the width of the visible box
+                    const animationSpeed = Math.max(15, (contentWidth / containerWidth) * 15); // Adjust speed proportionally
+                    document.querySelector('.news-content-wrapper').style.animationDuration = `${animationSpeed / 8}s`;
+                } else {
+                    // Display a message if no articles are found
+                    newsBanner.innerHTML = "<div class='news-content'>No news available.</div>";
+                }
+            } catch (error) {
+                console.error("Error fetching news:", error);
+            }
+        }
+
+        // Fetch news data when the page loads
+        document.addEventListener("DOMContentLoaded", fetchNews);
+    </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elbturm</title>
     <link rel="icon" href="path/to/your/favicon.ico" type="image/x-icon">
     <style>
