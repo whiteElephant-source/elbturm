@@ -41,6 +41,14 @@
                 transform: translateX(-100%); /* Move fully past the visible area */
             }
         }
+
+        a {
+        color: white;
+        text-decoration: underline;
+        }
+        a:hover {
+            text-decoration: italic;
+        }
     </style>
 </head>
 
@@ -71,7 +79,8 @@
                 const newsText = articles.map(article => {
                     const title = article.title || "No Title Available"; // Fallback if title is missing
                     const subtitle = article.description || "No Subtitle Available"; // Fallback if subtitle is missing
-                    return `+++ <strong>${title}</strong>: ${subtitle} +++`;
+                    const url = article.url || "#";
+                    return `+++ <a href="${url}" target="_blank" style="color: white; text-decoration: none;"><strong>${title}</strong></a>: ${subtitle} +++`;
                 }).join(' ');
         
                 // Set the inner HTML of the news ticker
@@ -80,7 +89,7 @@
                 // Dynamically adjust animation timing based on content length
                 const contentWidth = newsBanner.scrollWidth; // Get the width of the entire content
                 const containerWidth = document.getElementById('news-ticker').offsetWidth; // Get the width of the visible box
-                const animationSpeed = Math.max(15, (contentWidth / containerWidth) * 15); // Adjust speed proportionally
+                const animationSpeed = Math.max(10, (contentWidth / containerWidth) * 10); // Adjust speed proportionally
                 document.querySelector('.news-content-wrapper').style.animationDuration = `${animationSpeed}s`;
             } catch (error) {
                 console.error("Error fetching news:", error);
