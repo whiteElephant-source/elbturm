@@ -77,12 +77,13 @@
                 }
         
                 // Generate the ticker content with the format +++ title: subtitle +++
-                const newsText = articles.map(article => {
-                    const title = article.title || "No Title Available"; // Fallback if title is missing
-                    const subtitle = article.description || "No Subtitle Available"; // Fallback if subtitle is missing
+                const newsText = articles.map((article, index) => {
+                    const title = article.title || "No Title Available"; 
+                    const subtitle = article.description || "No Subtitle Available"; 
                     const url = article.url || "#";
                     return `${index === 0 ? '+++ ' : ''}<a href="${url}" target="_blank"><strong>${title}</strong></a>: ${subtitle}`;
                 }).join(' +++ ');
+
         
                 // Set the inner HTML of the news ticker
                 newsBanner.innerHTML = `<div class="news-content">${newsText}</div>`;
