@@ -71,7 +71,7 @@
                 newsBanner.innerHTML = `<marquee class="news-content">${newsText}</marquee>`;
                 const contentWidth = document.querySelector('.news-content-wrapper').scrollWidth;
                 const containerWidth = document.getElementById('news-ticker').offsetWidth; // Get the width of the visible box
-                const animationSpeed = Math.max(8, (contentWidth / containerWidth) * 8); // Adjust speed proportionally
+                const animationSpeed = Math.max(15, (contentWidth / containerWidth) * 15); // Adjust speed proportionally
                 document.querySelector('.news-content-wrapper').style.animationDuration = `${animationSpeed}s`;
             } catch (error) {
                 console.error("Error fetching news:", error);
