@@ -86,7 +86,7 @@
 
         
                 // Set the inner HTML of the news ticker
-                newsBanner.innerHTML = `<div class="news-content">${newsText}</div>`;
+                newsBanner.innerHTML = `<marquee class="news-content">${newsText}</marquee>`;
                 const contentWidth = document.querySelector('.news-content-wrapper').scrollWidth;
                 const containerWidth = document.getElementById('news-ticker').offsetWidth; // Get the width of the visible box
                 const animationSpeed = Math.max(8, (contentWidth / containerWidth) * 8); // Adjust speed proportionally
