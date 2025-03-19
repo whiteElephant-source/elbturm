@@ -6,103 +6,6 @@
     <title>Elbturm</title>
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <style>
-        /* Ticker container styling */
-        #news-ticker {
-            width: 100%;
-            background: #000000;
-            color: white;
-            padding: 10px 0;
-            white-space: nowrap;
-            overflow: hidden;
-            position: fixed;
-            bottom: 0;
-            font-weight: bold;
-            box-sizing: border-box;
-            z-index: 999; 
-        }
-
-        /* News content styling */
-        .news-content-wrapper {
-            display: flex;
-            animation: marquee 18s linear infinite; /* Default speed */
-        }
-
-        /* Make sure the content wraps without breaking */
-        .news-content {
-            display: inline-block;
-            white-space: nowrap;
-        }
-
-        a {
-            color: white !important;
-            text-decoration: underline !important;
-        }
-        a:hover {
-            text-decoration: italic !important;
-        }
-
-    </style>
-</head>
-
-<body>
-    <div id="news-ticker">
-        <div class="news-content-wrapper" id="news-banner"></div>
-    </div>
-
-    <script>
-        async function fetchNews() {
-            try {
-                // Fetch the news data from the server
-                const response = await fetch('https://elbturm-gnews-api.onrender.com/news');
-                const articles = await response.json();
-        
-                console.log(articles); // Debug: Check the structure of the data
-        
-                // Find the news-banner element
-                const newsBanner = document.getElementById('news-banner');
-        
-                // Check if articles exist
-                if (!Array.isArray(articles) || articles.length === 0) {
-                    newsBanner.innerHTML = "<div class='news-content'>No news available.</div>";
-                    return;
-                }
-        
-                // Generate the ticker content with the format +++ title: subtitle +++
-                const newsText = articles.map((article, index) => {
-                    const title = article.title || "No Title Available"; 
-                    const subtitle = article.description || "No Subtitle Available"; 
-                    const url = article.url || "#";
-                    return `${index === 0 ? '+++ ' : ''}<a href="${url}" target="_blank"><strong>${title}</strong></a>: ${subtitle}`;
-                }).join(' +++ ');
-
-        
-                // Set the inner HTML of the news ticker
-                newsBanner.innerHTML = `<marquee class="news-content">${newsText}</marquee>`;
-                const contentWidth = document.querySelector('.news-content-wrapper').scrollWidth;
-                const containerWidth = document.getElementById('news-ticker').offsetWidth; // Get the width of the visible box
-                const animationSpeed = Math.max(15, (contentWidth / containerWidth) * 15); // Adjust speed proportionally
-                document.querySelector('.news-content-wrapper').style.animationDuration = `${animationSpeed}s`;
-            } catch (error) {
-                console.error("Error fetching news:", error);
-                document.getElementById('news-banner').innerHTML = "<div class='news-content'>Error loading news.</div>";
-            }
-        }
-
-
-        // Fetch news data when the page loads
-        document.addEventListener("DOMContentLoaded", fetchNews);
-    </script>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elbturm</title>
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -119,6 +22,14 @@
         .content::-webkit-scrollbar {
             display: none;
         }
+        .popup-content::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for WebKit browsers */
+        }
+        
+        .popup-content {
+            scrollbar-width: none; /* Hide scrollbar for Firefox */
+        }
+        
         .highlight {
             color: black;
             background-color: white;
@@ -227,6 +138,42 @@
         .highlight:hover {
             font-style: italic; /* Changes text to italic on hover */
         }
+
+        /* Ticker container styling */
+        #news-ticker {
+            width: 100%;
+            background: #000000;
+            color: white;
+            padding: 10px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            position: fixed;
+            bottom: 0;
+            font-weight: bold;
+            box-sizing: border-box;
+            z-index: 999; 
+        }
+
+        /* News content styling */
+        .news-content-wrapper {
+            display: flex;
+            animation: marquee 18s linear infinite; /* Default speed */
+        }
+
+        /* Make sure the content wraps without breaking */
+        .news-content {
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        a {
+            color: white !important;
+            text-decoration: underline !important;
+        }
+        a:hover {
+            text-decoration: italic !important;
+        }
+
     </style>
     <script>
                 // Advanced Popup: Includes fetch for text, media, and additional text
@@ -672,6 +619,47 @@
             highlightAdvancedPopup('unfinished', 'texts/unfinished.txt', '', false, '');
         });
 
+        async function fetchNews() {
+            try {
+                // Fetch the news data from the server
+                const response = await fetch('https://elbturm-gnews-api.onrender.com/news');
+                const articles = await response.json();
+        
+                console.log(articles); // Debug: Check the structure of the data
+        
+                // Find the news-banner element
+                const newsBanner = document.getElementById('news-banner');
+        
+                // Check if articles exist
+                if (!Array.isArray(articles) || articles.length === 0) {
+                    newsBanner.innerHTML = "<div class='news-content'>No news available.</div>";
+                    return;
+                }
+        
+                // Generate the ticker content with the format +++ title: subtitle +++
+                const newsText = articles.map((article, index) => {
+                    const title = article.title || "No Title Available"; 
+                    const subtitle = article.description || "No Subtitle Available"; 
+                    const url = article.url || "#";
+                    return `${index === 0 ? '+++ ' : ''}<a href="${url}" target="_blank"><strong>${title}</strong></a>: ${subtitle}`;
+                }).join(' +++ ');
+
+        
+                // Set the inner HTML of the news ticker
+                newsBanner.innerHTML = `<marquee class="news-content">${newsText}</marquee>`;
+                const contentWidth = document.querySelector('.news-content-wrapper').scrollWidth;
+                const containerWidth = document.getElementById('news-ticker').offsetWidth; // Get the width of the visible box
+                const animationSpeed = Math.max(15, (contentWidth / containerWidth) * 15); // Adjust speed proportionally
+                document.querySelector('.news-content-wrapper').style.animationDuration = `${animationSpeed}s`;
+            } catch (error) {
+                console.error("Error fetching news:", error);
+                document.getElementById('news-banner').innerHTML = "<div class='news-content'>Error loading news.</div>";
+            }
+        }
+
+
+        // Fetch news data when the page loads
+        document.addEventListener("DOMContentLoaded", fetchNews);
     </script>
 </head>
 <body style="--spacing: 40px;">
@@ -736,5 +724,9 @@ Precisely because speculation is based on scarcity, it has produced half-finishe
         <p class="title-text">An unfinished house is a home.</h1>
         </p>
     </div>  
+
+    <div id="news-ticker">
+        <div class="news-content-wrapper" id="news-banner"></div>
+    </div>    
 </body>
 </html>
