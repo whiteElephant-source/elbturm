@@ -242,6 +242,8 @@
         function showAdvancedPopup(fileUrl, mediaUrl, isVideo, additionalText) {
             var popup = document.createElement('div');
             popup.className = 'popup';
+        
+            // Create the fixed close button and separate the scrollable content
             popup.innerHTML = `
                 <div class="close-container" style="position: relative;">
                     <div class="close-btn" 
@@ -250,45 +252,50 @@
                         x
                     </div>
                 </div>
-                <div class="popup-content" style="margin-top: 20px; overflow: auto;">
+                <div class="popup-content" style="margin-top: 20px; overflow: auto; height: calc(100% - 40px);">
                     <p class="popup-text">Loading content...</p>
                 </div>
             `;
+        
+            // Append the popup to the document
             document.body.appendChild(popup);
-
+        
             // Fetch content from a text file
             fetch(fileUrl)
                 .then(response => response.text())
                 .then(data => {
-                    // Add the fetched text
-                    popup.innerHTML += '<pre class="popup-text">' + data + '</pre>';
+                    // Add the fetched text to the scrollable area
+                    var contentDiv = popup.querySelector('.popup-content');
+                    contentDiv.innerHTML = '<pre class="popup-text">' + data + '</pre>';
                 })
                 .catch(error => {
                     console.error('Error fetching file:', error);
-                    popup.innerHTML += '<p class="error">Failed to load content. Please try again later.</p>';
+                    popup.querySelector('.popup-content').innerHTML = '<p class="error">Failed to load content. Please try again later.</p>';
                 });
-
-            // Add media (image or video)
+        
+            // Add media (image or video) to the scrollable area
             if (mediaUrl) {
+                var contentDiv = popup.querySelector('.popup-content');
                 if (isVideo) {
-                    popup.innerHTML += '<video class="media-video" src="' + mediaUrl + '" controls autoplay></video>';
+                    contentDiv.innerHTML += '<video class="media-video" src="' + mediaUrl + '" controls autoplay></video>';
                 } else {
-                    popup.innerHTML += '<img class="media-image" src="' + mediaUrl + '" alt="Image">';
+                    contentDiv.innerHTML += '<img class="media-image" src="' + mediaUrl + '" alt="Image">';
                 }
             }
-
-            // Add additional text
+        
+            // Add additional text to the scrollable area
             if (additionalText) {
-                popup.innerHTML += '<p class="popup-text">' + additionalText + '</p>';
+                var contentDiv = popup.querySelector('.popup-content');
+                contentDiv.innerHTML += '<p class="popup-text">' + additionalText + '</p>';
             }
-
+        
+            // Set popup display and initial position
             popup.style.display = 'block';
             popup.style.top = '50px';
             popup.style.left = '50px';
             popup.style.resize = 'both'; // Enable resizing for the advanced popup
-            popup.style.overflow = 'auto'; // Ensure scrollability
-            popup.addEventListener('mousedown', startDragAdvanced);
         }
+
 
         // Basic Popup: Only media and additional text
         function highlightBasicPopup(word, mediaUrl = '', isVideo = false, additionalText = '') {
@@ -668,7 +675,7 @@
     <div class="contact-link" onclick="showContactPopup()">contact</div>
     <div class="links-link" onclick="showLinksPopup()">links</div>
     <div class="content">
-        <h1 class="title-text">Elbturm // a goldmine</h1> 
+        <h1 class="title-text">Elbturm</h1> 
         <p class="regular-text">
             In 2025, the city of Hamburg will grow by around 100,200 m2. These additional areas need to be developed. Hamburg will therefore invest xxx million euros to extend the city's infrastructure and ensure connections to electricity, water and sewage. These areas will be removed from speculation and become part of urban reality again.
 By building a façade, a protective layer is created. Behind it thus: air that can be used, space that can be owned.
