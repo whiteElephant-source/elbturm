@@ -183,36 +183,8 @@
             var popup = document.createElement('div');
             popup.className = 'popup';
             popup.innerHTML = '<div class="close-btn" onclick="this.parentElement.style.display=\'none\';">x</div>';
-            // Append the popup to the document
             document.body.appendChild(popup);
-        
-            // Create the close button
-            var closeButton = document.createElement('div');
-            closeButton.className = 'close-btn';
-            closeButton.textContent = 'x';
-            closeButton.style.position = 'absolute'; // Make it float over the popup
-            closeButton.style.top = '-5px'; // Offset by 5px above the popup
-            closeButton.style.right = '-5px'; // Offset by 5px to the right
-            closeButton.style.cursor = 'pointer'; // Hand cursor
-            closeButton.style.backgroundColor = 'black'; // Button color
-            closeButton.style.color = 'white'; // Text color
-            closeButton.style.width = '20px'; // Optional: Button size
-            closeButton.style.height = '20px'; // Optional: Button size
-            closeButton.style.display = 'flex'; // Center text inside
-            closeButton.style.justifyContent = 'center'; // Center text horizontally
-            closeButton.style.alignItems = 'center'; // Center text vertically
-            closeButton.style.borderRadius = '50%'; // Optional: Make it circular
-            closeButton.style.boxShadow = '0px 2px 5px rgba(0, 0, 0, 0.5)'; // Optional: Add shadow
-        
-            // Close functionality
-            closeButton.onclick = function () {
-                popup.remove(); // Remove the popup from the DOM
-                closeButton.remove(); // Remove the button from the DOM
-            };
-        
-            // Append the close button to the popup (so it moves with the popup)
-            popup.appendChild(closeButton);
-        
+
             // Fetch content from a text file
             fetch(fileUrl)
                 .then(response => response.text())
@@ -224,7 +196,7 @@
                     console.error('Error fetching file:', error);
                     popup.innerHTML += '<p class="error">Failed to load content. Please try again later.</p>';
                 });
-        
+
             // Add media (image or video)
             if (mediaUrl) {
                 if (isVideo) {
@@ -233,20 +205,19 @@
                     popup.innerHTML += '<img class="media-image" src="' + mediaUrl + '" alt="Image">';
                 }
             }
-        
+
             // Add additional text
             if (additionalText) {
                 popup.innerHTML += '<p class="popup-text">' + additionalText + '</p>';
             }
-        
-            // Set popup display and initial position
+
             popup.style.display = 'block';
             popup.style.top = '50px';
             popup.style.left = '50px';
             popup.style.resize = 'both'; // Enable resizing for the advanced popup
             popup.style.overflow = 'auto'; // Ensure scrollability
+            popup.addEventListener('mousedown', startDragAdvanced);
         }
-
 
 
         // Basic Popup: Only media and additional text
@@ -264,33 +235,6 @@
             popup.className = 'popup';
             popup.innerHTML = '<div class="close-btn" onclick="this.parentElement.style.display=\'none\';">x</div>';
             document.body.appendChild(popup);
-
-            // Create the close button
-            var closeButton = document.createElement('div');
-            closeButton.className = 'close-btn';
-            closeButton.textContent = 'x';
-            closeButton.style.position = 'absolute'; // Make it float over the popup
-            closeButton.style.top = '-5px'; // Offset by 5px above the popup
-            closeButton.style.right = '-5px'; // Offset by 5px to the right
-            closeButton.style.cursor = 'pointer'; // Hand cursor
-            closeButton.style.backgroundColor = 'black'; // Button color
-            closeButton.style.color = 'white'; // Text color
-            closeButton.style.width = '20px'; // Optional: Button size
-            closeButton.style.height = '20px'; // Optional: Button size
-            closeButton.style.display = 'flex'; // Center text inside
-            closeButton.style.justifyContent = 'center'; // Center text horizontally
-            closeButton.style.alignItems = 'center'; // Center text vertically
-            closeButton.style.borderRadius = '50%'; // Optional: Make it circular
-            closeButton.style.boxShadow = '0px 2px 5px rgba(0, 0, 0, 0.5)'; // Optional: Add shadow
-        
-            // Close functionality
-            closeButton.onclick = function () {
-                popup.remove(); // Remove the popup from the DOM
-                closeButton.remove(); // Remove the button from the DOM
-            };
-        
-            // Append the close button to the popup (so it moves with the popup)
-            popup.appendChild(closeButton);
             
             // Add media (image or video)
             if (mediaUrl) {
