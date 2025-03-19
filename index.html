@@ -242,7 +242,13 @@
         function showAdvancedPopup(fileUrl, mediaUrl, isVideo, additionalText) {
             var popup = document.createElement('div');
             popup.className = 'popup';
-            popup.innerHTML = '<div class="close-btn" onclick="this.parentElement.style.display=\'none\';">x</div>';
+            popup.innerHTML = `<div class="close-container" style="position: relative;">
+                    <div class="close-btn" 
+                        style="position: absolute; top: 10px; right: 10px; cursor: pointer;"
+                        onclick="this.closest('.popup').style.display='none';">x
+                    </div>
+                </div>
+            `;
             document.body.appendChild(popup);
 
             // Fetch content from a text file
