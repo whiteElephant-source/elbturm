@@ -68,11 +68,15 @@
             position: absolute;
             top: 0px;
             left: calc(100% + 5px); /* Place it next to the right side of the popup */
+            background-color: black; /* Button background */
             color: white; /* Text color */
             cursor: pointer; /* Hand cursor */
             width: 30px; /* Button size */
             height: 30px; /* Button size */
             font-size: 16px; /* Size of the 'x' */
+            display: flex; /* Center align text */
+            justify-content: center; /* Center align horizontally */
+            align-items: center; /* Center align vertically */
             z-index: 1100; /* Ensure it stays above other elements inside the popup */
         }
         .title-text {
