@@ -186,23 +186,32 @@
             // Append the popup to the document
             document.body.appendChild(popup);
         
-            // Create the close button as a separate element, outside the popup
+            // Create the close button
             var closeButton = document.createElement('div');
             closeButton.className = 'close-btn';
             closeButton.textContent = 'x';
-            closeButton.style.position = 'absolute';
-            closeButton.style.top = '45px'; // Align with the popup top position
-            closeButton.style.left = 'calc(50px + 600px + 10px)'; // Place it next to the popup (popup width + spacing)
-            closeButton.style.cursor = 'pointer';
+            closeButton.style.position = 'absolute'; // Make it float over the popup
+            closeButton.style.top = '-5px'; // Offset by 5px above the popup
+            closeButton.style.right = '-5px'; // Offset by 5px to the right
+            closeButton.style.cursor = 'pointer'; // Hand cursor
+            closeButton.style.backgroundColor = 'black'; // Button color
+            closeButton.style.color = 'white'; // Text color
+            closeButton.style.width = '20px'; // Optional: Button size
+            closeButton.style.height = '20px'; // Optional: Button size
+            closeButton.style.display = 'flex'; // Center text inside
+            closeButton.style.justifyContent = 'center'; // Center text horizontally
+            closeButton.style.alignItems = 'center'; // Center text vertically
+            closeButton.style.borderRadius = '50%'; // Optional: Make it circular
+            closeButton.style.boxShadow = '0px 2px 5px rgba(0, 0, 0, 0.5)'; // Optional: Add shadow
         
-            // Add the close functionality
+            // Close functionality
             closeButton.onclick = function () {
-                popup.style.display = 'none'; // Hide the popup
-                closeButton.style.display = 'none'; // Hide the button
+                popup.remove(); // Remove the popup from the DOM
+                closeButton.remove(); // Remove the button from the DOM
             };
         
-            // Add the close button to the document
-            document.body.appendChild(closeButton);
+            // Append the close button to the popup (so it moves with the popup)
+            popup.appendChild(closeButton);
         
             // Fetch content from a text file
             fetch(fileUrl)
