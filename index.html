@@ -243,50 +243,51 @@
             var popup = document.createElement('div');
             popup.className = 'popup';
         
-            // Create the fixed close button and separate the scrollable content
-            popup.innerHTML = `
-                <div class="close-container" style="position: relative;">
-                    <div class="close-btn" 
-                        style="position: absolute; top: 5px; right: 10px; cursor: pointer;" 
-                        onclick="this.closest('.popup').style.display='none';">
-                        x
-                    </div>
-                </div>
-                <div class="popup-content" style="margin-top: 20px; overflow: auto; height: calc(100% - 40px);">
-                    <p class="popup-text">Loading content...</p>
-                </div>
-            `;
-        
             // Append the popup to the document
             document.body.appendChild(popup);
+        
+            // Create the close button as a separate element, outside the popup
+            var closeButton = document.createElement('div');
+            closeButton.className = 'close-btn';
+            closeButton.textContent = 'x';
+            closeButton.style.position = 'absolute';
+            closeButton.style.top = '45px'; // Align with the popup top position
+            closeButton.style.left = 'calc(50px + 600px + 10px)'; // Place it next to the popup (popup width + spacing)
+            closeButton.style.cursor = 'pointer';
+        
+            // Add the close functionality
+            closeButton.onclick = function () {
+                popup.style.display = 'none'; // Hide the popup
+                closeButton.style.display = 'none'; // Hide the button
+            };
+        
+            // Add the close button to the document
+            document.body.appendChild(closeButton);
         
             // Fetch content from a text file
             fetch(fileUrl)
                 .then(response => response.text())
                 .then(data => {
-                    // Add the fetched text to the scrollable area
-                    var contentDiv = popup.querySelector('.popup-content');
-                    contentDiv.innerHTML = '<pre class="popup-text">' + data + '</pre>';
+                    // Add the fetched text
+                    popup.innerHTML += '<pre class="popup-text">' + data + '</pre>';
                 })
                 .catch(error => {
                     console.error('Error fetching file:', error);
-                    popup.querySelector('.popup-content').innerHTML = '<p class="error">Failed to load content. Please try again later.</p>';
+                    popup.innerHTML += '<p class="error">Failed to load content. Please try again later.</p>';
                 });
         
-            // Add media (image or video) to the scrollable area
+            // Add media (image or video)
             if (mediaUrl) {
-                var contentDiv = popup.querySelector('.popup-content');
                 if (isVideo) {
-                    contentDiv.innerHTML += '<video class="media-video" src="' + mediaUrl + '" controls autoplay></video>';
+                    popup.innerHTML += '<video class="media-video" src="' + mediaUrl + '" controls autoplay></video>';
                 } else {
-                    contentDiv.innerHTML += '<img class="media-image" src="' + mediaUrl + '" alt="Image">';
+                    popup.innerHTML += '<img class="media-image" src="' + mediaUrl + '" alt="Image">';
                 }
             }
         
-            // Add additional text to the scrollable area
+            // Add additional text
             if (additionalText) {
-                var contentDiv = popup.querySelector('.popup-content');
-                contentDiv.innerHTML += '<p class="popup-text">' + additionalText + '</p>';
+                popup.innerHTML += '<p class="popup-text">' + additionalText + '</p>';
             }
         
             // Set popup display and initial position
@@ -294,7 +295,9 @@
             popup.style.top = '50px';
             popup.style.left = '50px';
             popup.style.resize = 'both'; // Enable resizing for the advanced popup
+            popup.style.overflow = 'auto'; // Ensure scrollability
         }
+
 
 
         // Basic Popup: Only media and additional text
