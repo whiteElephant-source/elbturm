@@ -174,7 +174,7 @@
     </style>
     <script>
                 // Advanced Popup: Includes fetch for text, media, and additional text
-        function highlightAdvancedPopup(word, fileUrl, mediaUrls = '', isVideo = false, additionalText = '') {
+        function highlightAdvancedPopup(word, fileUrl, mediaUrl = '', isVideo = false, additionalText = '') {
             var content = document.querySelector('.content');
             var regex = new RegExp('\\b' + word + '\\b', 'gi');
 
@@ -183,12 +183,12 @@
             });
         }
 
-        function showAdvancedPopup(fileUrl, mediaUrls, isVideo, additionalText) {
+        function showAdvancedPopup(fileUrl, mediaUrl, isVideo, additionalText) {
             var popup = document.createElement('div');
             popup.className = 'popup';
             popup.innerHTML = '<div class="close-btn" onclick="this.parentElement.style.display=\'none\';">x</div>';
             
-            var images = mediaUrls.split(';');
+           /* var images = mediaUrls.split(';');
             images.forEach(function(imageUrl) {
                 var imgElement = document.createElement('img');
                 imgElement.src = imageUrl.trim(); // Trim any extra spaces
@@ -196,7 +196,7 @@
                 imgElement.style.display = 'block'; // Optional styling
                 imgElement.style.margin = '10px'; // Optional styling
                 popup.appendChild(imgElement);
-            });
+            }); */
             
             document.body.appendChild(popup);
 
@@ -457,16 +457,16 @@
 
         // Define popup content separately
         var ETFileUrl = 'texts/elbtower.txt';
-        var ETMediaUrls = 'images/elbtower02.webp'; // Update to the correct path
+        var ETMediaUrl = 'images/elbtower02.webp'; // Update to the correct path
         var ETIsVideo = false; // Set to true if it's a video
 
-        var SLTMediaUrls = 'images/slt01.webp'; // Set to .mp4 if it's a video
+        var SLTMediaUrl = 'images/slt01.webp'; // Set to .mp4 if it's a video
         var SLTIsVideo = false; // Set to true if it's a video
 
         // Adding new popup content here
         var sqmFileUrl = 'texts/100200m2.txt';
 
-        var millionMediaUrls = 'images/million.webp';
+        var millionMediaUrl = 'images/million.webp';
 
         var percentFileUrl = 'texts/30percent.txt';
 
@@ -487,7 +487,7 @@
         var repurchaseFileUrl = 'texts/zoned.txt';
 
         var siteFileUrl = 'texts/site.txt';
-        var siteMediaUrls = 'images/site_entenwerder.avif;images/site_toteninsel.avif';
+        var siteMediaUrl = 'images/site_entenwerder.avif';
 
         var brightFileUrl = 'texts/buildingright.txt';
 
@@ -558,7 +558,7 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-            highlightAdvancedPopup('site', 'texts/site.txt', 'images/site_entenwerder.avif; images/site_toteninsel.avif', false, '');
+            highlightAdvancedPopup('site', 'texts/site.txt', 'images/site_entenwerder.avif', false, '');
         });
 
         document.addEventListener('DOMContentLoaded', function() {
