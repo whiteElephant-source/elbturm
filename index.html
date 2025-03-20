@@ -187,17 +187,6 @@
             var popup = document.createElement('div');
             popup.className = 'popup';
             popup.innerHTML = '<div class="close-btn" onclick="this.parentElement.style.display=\'none\';">x</div>';
-            
-           /* var images = mediaUrls.split(';');
-            images.forEach(function(imageUrl) {
-                var imgElement = document.createElement('img');
-                imgElement.src = imageUrl.trim(); // Trim any extra spaces
-                imgElement.alt = 'Popup Image';
-                imgElement.style.display = 'block'; // Optional styling
-                imgElement.style.margin = '10px'; // Optional styling
-                popup.appendChild(imgElement);
-            }); */
-            
             document.body.appendChild(popup);
 
             // Fetch content from a text file
@@ -213,11 +202,11 @@
                 });
 
             // Add media (image or video)
-            if () {
+            if (mediaUrl) {
                 if (isVideo) {
-                    popup.innerHTML += '<video class="media-video" src="' +  + '" controls autoplay></video>';
+                    popup.innerHTML += '<video class="media-video" src="' + mediaUrl + '" controls autoplay></video>';
                 } else {
-                    popup.innerHTML += '<img class="media-image" src="' +  + '" alt="Image">';
+                    popup.innerHTML += '<img class="media-image" src="' + mediaUrl + '" alt="Image">';
                 }
             }
 
