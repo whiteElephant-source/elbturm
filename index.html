@@ -179,7 +179,7 @@
             var regex = new RegExp('\\b' + word + '\\b', 'gi');
 
             content.innerHTML = content.innerHTML.replace(regex, function (matched) {
-                return '<span class="highlight" onclick="showAdvancedPopup(\'' + fileUrl + '\', \'' + mediaUrls + '\', ' + isVideo + ', \'' + additionalText + '\')">' + matched + '</span>';
+                return '<span class="highlight" onclick="showAdvancedPopup(\'' + fileUrl + '\', \'' + mediaUrl + '\', ' + isVideo + ', \'' + additionalText + '\')">' + matched + '</span>';
             });
         }
 
