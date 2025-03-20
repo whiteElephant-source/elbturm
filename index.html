@@ -174,7 +174,7 @@
     </style>
     <script>
                 // Advanced Popup: Includes fetch for text, media, and additional text
-        function highlightAdvancedPopup(word, fileUrl, mediaUrls, isVideo = false, additionalText = '') {
+        function highlightAdvancedPopup(word, fileUrl, mediaUrls = '', isVideo = false, additionalText = '') {
             var content = document.querySelector('.content');
             var regex = new RegExp('\\b' + word + '\\b', 'gi');
 
