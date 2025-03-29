@@ -418,33 +418,36 @@
             var offsetX = event.clientX - rect.left;
             var offsetY = event.clientY - rect.top;
         
-            // Determine if the user clicked near the bottom-right corner for resizing
+            // Determine if the user clicked near the bottom-right corner for resizing.
             var isResizing = (event.clientX > rect.right - 20 && event.clientY > rect.bottom - 20);
         
             function movePopup(event) {
                 if (isResizing) {
-                    // For resizing, calculate new dimensions using the popup's current top and left.
+                    // For resizing, use the current top and left stored in the popup's style.
                     var currentLeft = parseInt(popup.style.left, 10);
                     var currentTop = parseInt(popup.style.top, 10);
-                    var newWidth = Math.max(event.clientX - currentLeft, 150); // Minimum width: 150px
-                    var newHeight = Math.max(event.clientY - currentTop, 100); // Minimum height: 100px
+                    // Calculate new dimensions and enforce a minimum size (e.g., 100px)
+                    var newWidth = Math.max(event.clientX - currentLeft, 100);
+                    var newHeight = Math.max(event.clientY - currentTop, 100);
                     popup.style.width = newWidth + 'px';
                     popup.style.height = newHeight + 'px';
                 } else {
-                    // For dragging, adjust the popup position
+                    // Handle dragging: update popup position using the initial offset.
                     popup.style.top = (event.clientY - offsetY) + 'px';
                     popup.style.left = (event.clientX - offsetX) + 'px';
                 }
-                // Update the close button position to stay at the top-right of the popup
+                // Always update the close button position so it stays at the popup's top-right
                 updateCloseButtonPosition(popup, closeButton);
             }
         
             document.addEventListener('mousemove', movePopup);
+            // Remove event listeners after the mouse is released
             document.addEventListener('mouseup', function removeListeners() {
                 document.removeEventListener('mousemove', movePopup);
                 document.removeEventListener('mouseup', removeListeners);
             });
         }
+
 
 
             document.addEventListener('mousemove', movePopup);
