@@ -448,15 +448,6 @@
             });
         }
 
-
-
-            document.addEventListener('mousemove', movePopup);
-            // Remove event listeners after the mouse is released
-            document.addEventListener('mouseup', function removeListeners() {
-                document.removeEventListener('mousemove', movePopup);
-                document.removeEventListener('mouseup', removeListeners);
-            });
-        }
         // Define popup content separately
         var ETFileUrl = 'texts/elbtower.txt';
         var ETMediaUrl = 'images/elbtower02.webp'; // Update to the correct path
