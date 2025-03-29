@@ -186,14 +186,25 @@
         function showAdvancedPopup(fileUrl, mediaUrl, isVideo, additionalText) {
             var popup = document.createElement('div');
             popup.className = 'popup';
-            popup.innerHTML = '<div class="close-btn" onclick="this.parentElement.style.display=\'none\';">x</div>';
             document.body.appendChild(popup);
+
+            // Create and append the close button
+            var closeButton = document.createElement('div');
+            closeButton.className = 'close-btn';
+            closeButton.innerHTML = 'x';
+            closeButton.style.position = 'absolute';
+            closeButton.style.cursor = 'pointer';
+            document.body.appendChild(closeButton);
+
+            closeButton.addEventListener('click', function () {
+                popup.remove();
+                closeButton.remove();
+            });
 
             // Fetch content from a text file
             fetch(fileUrl)
                 .then(response => response.text())
                 .then(data => {
-                    // Add the fetched text
                     popup.innerHTML += '<pre class="popup-text">' + data + '</pre>';
                 })
                 .catch(error => {
@@ -218,9 +229,25 @@
             popup.style.display = 'block';
             popup.style.top = '50px';
             popup.style.left = '50px';
-            popup.style.resize = 'both'; // Enable resizing for the advanced popup
+            popup.style.resize = 'both'; // Enable resizing
             popup.style.overflow = 'auto'; // Ensure scrollability
-            popup.addEventListener('mousedown', startDragAdvanced);
+
+            // Set initial position of the close button
+            updateCloseButtonPosition(popup, closeButton);
+
+            popup.addEventListener('mousedown', function (event) {
+                startDrag(event, popup, closeButton);
+            });
+
+            popup.addEventListener('resize', function () {
+                updateCloseButtonPosition(popup, closeButton);
+            });
+        }
+
+        function updateCloseButtonPosition(popup, closeButton) {
+            var rect = popup.getBoundingClientRect();
+            closeButton.style.top = `${rect.top - 20}px`; // Offset above
+            closeButton.style.left = `${rect.right - 10}px`; // Offset to the right
         }
 
 
@@ -237,9 +264,21 @@
         function showBasicPopup(mediaUrl, isVideo, additionalText) {
             var popup = document.createElement('div');
             popup.className = 'popup';
-            popup.innerHTML = '<div class="close-btn" onclick="this.parentElement.style.display=\'none\';">x</div>';
             document.body.appendChild(popup);
-            
+
+            // Create and append the close button
+            var closeButton = document.createElement('div');
+            closeButton.className = 'close-btn';
+            closeButton.innerHTML = 'x';
+            closeButton.style.position = 'absolute';
+            closeButton.style.cursor = 'pointer';
+            document.body.appendChild(closeButton);
+
+            closeButton.addEventListener('click', function () {
+                popup.remove();
+                closeButton.remove();
+            });
+
             // Add media (image or video)
             if (mediaUrl) {
                 if (isVideo) {
@@ -257,82 +296,25 @@
             popup.style.display = 'block';
             popup.style.top = '50px';
             popup.style.left = '50px';
-            popup.style.resize = 'both'; // Enable resizing for the basic popup
+            popup.style.resize = 'both'; // Enable resizing
             popup.style.overflow = 'auto'; // Ensure scrollability
-            popup.addEventListener('mousedown', startDragBasic);
+
+            // Set initial position of the close button
+            updateCloseButtonPosition(popup, closeButton);
+
+            popup.addEventListener('mousedown', function (event) {
+                startDrag(event, popup, closeButton);
+            });
         }
 
-        function startDragAdvanced(event) {
-            var popup = event.target.closest('.popup');
-            if (!popup) return; // Ensure the popup exists
-
-            var rect = popup.getBoundingClientRect();
-            var offsetX = event.clientX - rect.left;
-            var offsetY = event.clientY - rect.top;
-
-            // Check if resizing (near bottom-right corner)
-            var isResizing = (event.clientX > rect.right - 20 && event.clientY > rect.bottom - 20);
-
-            function movePopup(event) {
-                if (isResizing) {
-                    // Handle resizing
-                    popup.style.width = Math.max(event.clientX - rect.left, 100) + 'px'; // Minimum width: 100px
-                    popup.style.height = Math.max(event.clientY - rect.top, 100) + 'px'; // Minimum height: 100px
-                } else {
-                    // Handle dragging
-                    popup.style.top = (event.clientY - offsetY) + 'px';
-                    popup.style.left = (event.clientX - offsetX) + 'px';
-                }
-            }
-
-            function stopPopupActions() {
-                document.removeEventListener('mousemove', movePopup);
-                document.removeEventListener('mouseup', stopPopupActions);
-            }
-
-            document.addEventListener('mousemove', movePopup);
-            document.addEventListener('mouseup', stopPopupActions);
-        }
-
-        function startDragBasic(event) {
-            var popup = event.target.closest('.popup');
-            if (!popup) return; // Ensure the popup exists
-
-            var rect = popup.getBoundingClientRect();
-            var offsetX = event.clientX - rect.left;
-            var offsetY = event.clientY - rect.top;
-
-            // Check if resizing (near bottom-right corner)
-            var isResizing = (event.clientX > rect.right - 20 && event.clientY > rect.bottom - 20);
-
-            function movePopup(event) {
-                if (isResizing) {
-                    // Handle resizing
-                    popup.style.width = Math.max(event.clientX - rect.left, 100) + 'px'; // Minimum width: 100px
-                    popup.style.height = Math.max(event.clientY - rect.top, 100) + 'px'; // Minimum height: 100px
-                } else {
-                    // Handle dragging
-                    popup.style.top = (event.clientY - offsetY) + 'px';
-                    popup.style.left = (event.clientX - offsetX) + 'px';
-                }
-            }
-
-            function stopPopupActions() {
-                document.removeEventListener('mousemove', movePopup);
-                document.removeEventListener('mouseup', stopPopupActions);
-            }
-
-            document.addEventListener('mousemove', movePopup);
-            document.addEventListener('mouseup', stopPopupActions);
-        }
 
         function showContactPopup() {
             var contactPopup = document.createElement('div');
             contactPopup.className = 'contact-popup';
-            
+            document.body.appendChild(contactPopup);
+
             // Add content dynamically
             contactPopup.innerHTML = `
-                <div class="close-btn" onclick="this.parentElement.style.display='none';">x</div>
                 <p>
                     <span class="clickable" data-link="https://www.instagram.com/lida_freu">Lida Freudenreich</span>, 
                     born in 2000, loves steel trade routes and the arctic. 
@@ -344,7 +326,18 @@
                 </p>
             `;
 
-            document.body.appendChild(contactPopup);
+            // Create and append the close button
+            var closeButton = document.createElement('div');
+            closeButton.className = 'close-btn';
+            closeButton.innerHTML = 'x';
+            closeButton.style.position = 'absolute';
+            closeButton.style.cursor = 'pointer';
+            document.body.appendChild(closeButton);
+
+            closeButton.addEventListener('click', function () {
+                contactPopup.remove();
+                closeButton.remove();
+            });
 
             // Add event listeners to clickable elements
             var clickableElements = contactPopup.querySelectorAll('.clickable');
@@ -358,36 +351,22 @@
             contactPopup.style.top = '50px';
             contactPopup.style.left = '50px';
 
-            contactPopup.addEventListener('mousedown', startDragContact);
-            contactPopup.addEventListener('mouseup', function () {
-                document.removeEventListener('mousemove', moveContactPopup);
+            // Set initial position of the close button
+            updateCloseButtonPosition(contactPopup, closeButton);
+
+            contactPopup.addEventListener('mousedown', function (event) {
+                startDrag(event, contactPopup, closeButton);
             });
         }
 
-        function startDragContact(event) {
-            var contactPopup = event.target.closest('.contact-popup');
-            var offsetX = event.clientX - contactPopup.getBoundingClientRect().left;
-            var offsetY = event.clientY - contactPopup.getBoundingClientRect().top;
-
-            function moveContactPopup(event) {
-                contactPopup.style.top = (event.clientY - offsetY) + 'px';
-                contactPopup.style.left = (event.clientX - offsetX) + 'px';
-            }
-
-            document.addEventListener('mousemove', moveContactPopup);
-
-            contactPopup.addEventListener('click', function() {
-                document.removeEventListener('mousemove', moveContactPopup);
-            });
-        }
 
         function showLinksPopup() {
             var linksPopup = document.createElement('div');
             linksPopup.className = 'links-popup';
+            document.body.appendChild(linksPopup);
 
             // Add content dynamically using "clickable" spans
             linksPopup.innerHTML = `
-                <div class="close-btn" onclick="this.parentElement.style.display='none';">x</div>
                 <p><span class="clickable" data-link="https://suche.transparenz.hamburg.de/dataset?q=&esq_not_all_versions=true&esq_not_all_versions=false&esq_title=Elbtower&esq_number=&esq_author=&esq_location=&esq_temp_from=&esq_temp_to=&esq_coverage_type=publication&l=dl-de-by-2.0&l=dl-zero-de-2.0&l=odbl&l=geoNutz-20130319&l=dl-de-zero-2.0&esq_type=app&esq_type=dataset&esq_type=document&f=ascii&f=citygml&f=CSV&f=data&f=doc&f=docx&f=dxf&f=ert&f=geotiff&f=gml&f=HTML&f=jpeg&f=jpg&f=JSON&f=mqtt&f=oaf&f=ov2&f=PDF&f=png&f=rar&f=shapefiles&f=sta&f=tiff&f=TXT&f=web&f=wfs&f=wms&f=XLS&f=xlsx&f=XML&f=xsd&f=ZIP&g=bevolkerung&g=bildung-und-wissenschaft&g=geografie-geologie-und-geodaten&g=gesetze-und-justiz&g=gesundheit&g=infrastruktur-bauen-und-wohnen&g=kultur-sport-und-tourismus&g=politik-und-wahlen&g=soziales&g=transport-und-verkehr&g=umwelt-und-klima&g=verbraucherschutz&g=verwaltung-haushalt-und-steuern&g=wirtschaft-und-arbeit&e=baugenehmigungen&e=baumkataster&e=dienstanweisungen&e=geodaten&e=gutachten&e=senatmitteilungen&e=ohneveroeffentlichungspflicht&e=beschluesse&e=bauleitplaene&e=senatpetitum&e=vergleichbar&e=vertraegeoeffinteresse&e=statistiken&e=subventionen&e=messungen&e=staedtischebeteiligungen&e=andereveroeffentlichungspflicht&e=daseinsvorsorge&e=verwaltungsbelange&e=verwaltungsvorschriften">Transparenzportal Hamburg</span></p>
                 <p><span class="clickable" data-link="https://www.bezahlbarbauen.hamburg/">Bezahlbar Bauen Hamburg</span></p>
                 <p><span class="clickable" data-link="https://archive.org/search?query=construction+ruin/">Internet Archive</span></p>
@@ -400,7 +379,18 @@
                 <p><span class="clickable" data-link="https://www.lexsoft.de/cgi-bin/lexsoft/justizportal_nrw.cgi?xid=1540888,1">Hamburger Bauordnung</span></p>
             `;
 
-            document.body.appendChild(linksPopup);
+            // Create and append the close button
+            var closeButton = document.createElement('div');
+            closeButton.className = 'close-btn';
+            closeButton.innerHTML = 'x';
+            closeButton.style.position = 'absolute';
+            closeButton.style.cursor = 'pointer';
+            document.body.appendChild(closeButton);
+
+            closeButton.addEventListener('click', function () {
+                linksPopup.remove();
+                closeButton.remove();
+            });
 
             // Add event listeners to clickable elements
             var clickableElements = linksPopup.querySelectorAll('.clickable');
@@ -414,29 +404,33 @@
             linksPopup.style.top = '50px';
             linksPopup.style.left = '50px';
 
-            linksPopup.addEventListener('mousedown', startDragLinks);
-            linksPopup.addEventListener('mouseup', function () {
-                document.removeEventListener('mousemove', moveLinksPopup);
+            // Set initial position of the close button
+            updateCloseButtonPosition(linksPopup, closeButton);
+
+            linksPopup.addEventListener('mousedown', function (event) {
+                startDrag(event, linksPopup, closeButton);
             });
         }
 
-        function startDragLinks(event) {
-            var linksPopup = event.target.closest('.links-popup');
-            var offsetX = event.clientX - linksPopup.getBoundingClientRect().left;
-            var offsetY = event.clientY - linksPopup.getBoundingClientRect().top;
+        function startDrag(event, popup, closeButton) {
+            var rect = popup.getBoundingClientRect();
+            var offsetX = event.clientX - rect.left;
+            var offsetY = event.clientY - rect.top;
 
-            function moveLinksPopup(event) {
-                linksPopup.style.top = (event.clientY - offsetY) + 'px';
-                linksPopup.style.left = (event.clientX - offsetX) + 'px';
+            function movePopup(event) {
+                popup.style.top = (event.clientY - offsetY) + 'px';
+                popup.style.left = (event.clientX - offsetX) + 'px';
+
+                // Dynamically update the close button position
+                updateCloseButtonPosition(popup, closeButton);
             }
 
-            document.addEventListener('mousemove', moveLinksPopup);
+            document.addEventListener('mousemove', movePopup);
 
-            linksPopup.addEventListener('click', function() {
-                document.removeEventListener('mousemove', moveLinksPopup);
+            popup.addEventListener('mouseup', function () {
+                document.removeEventListener('mousemove', movePopup);
             });
         }
-
         function changeTextAlignment(className, alignment) {
             var textBlocks = document.querySelectorAll('.' + className);
             textBlocks.forEach(function (block) {
