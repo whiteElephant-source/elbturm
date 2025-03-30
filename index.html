@@ -355,6 +355,11 @@
             // Set initial position of the close button
             updateCloseButtonPosition(contactPopup, closeButton);
 
+            // Add drag-and-resize functionality
+            contactPopup.addEventListener('mousedown', function (event) {
+                startDrag(event, contactPopup, closeButton);
+            });
+
             contactPopup.addEventListener('mousedown', function (event) {
                 (event, contactPopup, closeButton);
             });
@@ -404,6 +409,11 @@
             linksPopup.style.display = 'block';
             linksPopup.style.top = '50px';
             linksPopup.style.left = '50px';
+
+            // Add drag-and-resize functionality
+            linksPopup.addEventListener('mousedown', function (event) {
+                startDrag(event, linksPopup, closeButton);
+            });
 
             // Set initial position of the close button
             updateCloseButtonPosition(linksPopup, closeButton);
