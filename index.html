@@ -518,99 +518,6 @@
         var unfinishedFileUrl = 'texts/unfinished.txt';
         
 
-        // Highlight the words and set their popup content
-        document.addEventListener('DOMContentLoaded', function() {
-            highlightAdvancedPopup('Elbtower', 'texts/elbtower.txt', 'images/elbtower02.webp', false, '');
-        });
-        document.addEventListener('DOMContentLoaded', function () {
-            highlightAdvancedPopup('Schwabenlandtower', 'texts/schwabenlandtower.txt', 'images/slt01.webp', false, '');
-        });
-
-        document.addEventListener('DOMContentLoaded', function () {
-            highlightBasicPopup('50 million euros', 'images/50_million.avif', false, 'Estimated cost to make the tower inhabitable.');
-        });
-
-        // Adding new Highlight Functions here
-        document.addEventListener('DOMContentLoaded', function() {
-            highlightAdvancedPopup('100,200 m2', 'texts/100200m2.txt', 'images/100200m2_02.avif', false, '');
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            highlightAdvancedPopup('30% will be housing, 30% non-housing and 40% public', 'texts/30percent.txt', 'images/30percent.avif', false, '');
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            highlightAdvancedPopup('façade', 'texts/facade.txt', '', false, '');
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            highlightAdvancedPopup('building standards', 'texts/buildingstandards.txt', 'images/buildingstandards.jpg', false, '');
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            highlightAdvancedPopup('good deal', 'texts/gooddeal.txt', '', false, '');
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            highlightAdvancedPopup('zoned', 'texts/zoned.txt', 'images/zoned.avif', false, '');
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            highlightAdvancedPopup('vacancy', 'texts/vacancy.txt', '', false, '');
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            highlightAdvancedPopup('1.5 million euros', 'texts/xxxeuros.txt', 'images/return.avif', false, '');
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            highlightAdvancedPopup('repurchase', 'texts/repurchase.txt', '', false, '');
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            highlightAdvancedPopup('site', 'texts/site.txt', 'images/site_entenwerder.avif', false, '');
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            highlightAdvancedPopup('heritable building right', 'texts/buildingright.txt', 'images/heritable.avif', false, '');
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            highlightAdvancedPopup('prevent the city from becoming generic and bland', 'texts/generic.txt', '', false, '');
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            highlightAdvancedPopup('debts', 'texts/debts.txt', '', false, '');
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            highlightAdvancedPopup('risks', 'texts/risks.txt', '', false, '');
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            highlightAdvancedPopup('separation of the private market and the state', 'texts/state.txt', '', false, '');
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            highlightAdvancedPopup('value', 'texts/value.txt', '', false, '');
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            highlightAdvancedPopup('failure', 'texts/failure.txt', '', false, '');
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            highlightAdvancedPopup('financial mechanisms', 'texts/mechanisms.txt', '', false, '');
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            highlightAdvancedPopup('unfinished', 'texts/unfinished.txt', '', false, '');
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            highlightAdvancedPopup('hereditary building right', 'texts/buildingright.txt', '', false, '');
-        });
-
         async function fetchNews() {
             try {
                 // Fetch the news data from the server
@@ -649,16 +556,42 @@
             }
         }
 
+        document.addEventListener("DOMContentLoaded", function() {
+            // Popup Highlights
+            highlightAdvancedPopup('Elbtower', 'texts/elbtower.txt', 'images/elbtower02.webp', false, '');
+            highlightAdvancedPopup('Schwabenlandtower', 'texts/schwabenlandtower.txt', 'images/slt01.webp', false, '');
+            highlightBasicPopup('50 million euros', 'images/50_million.avif', false, 'Estimated cost to make the tower inhabitable.');
+            highlightAdvancedPopup('100,200 m2', 'texts/100200m2.txt', 'images/100200m2_02.avif', false, '');
+            highlightAdvancedPopup('30% will be housing, 30% non-housing and 40% public', 'texts/30percent.txt', 'images/30percent.avif', false, '');
+            highlightAdvancedPopup('façade', 'texts/facade.txt', '', false, '');
+            highlightAdvancedPopup('building standards', 'texts/buildingstandards.txt', '', false, '');
+            highlightAdvancedPopup('good deal', 'texts/gooddeal.txt', '', false, '');
+            highlightAdvancedPopup('zoned', 'texts/zoned.txt', 'images/zoned.avif', false, '');
+            highlightAdvancedPopup('vacancy', 'texts/vacancy.txt', '', false, '');
+            highlightAdvancedPopup('1.5 million euros', 'texts/xxxeuros.txt', 'images/return.avif', false, '');
+            highlightAdvancedPopup('repurchase', 'texts/repurchase.txt', '', false, '');
+            highlightAdvancedPopup('site', 'texts/site.txt', 'images/site_entenwerder.avif', false, '');
+            highlightAdvancedPopup('heritable building right', 'texts/buildingright.txt', 'images/heritable.avif', false, '');
+            highlightAdvancedPopup('prevent the city from becoming generic and bland', 'texts/generic.txt', '', false, '');
+            highlightAdvancedPopup('debts', 'texts/debts.txt', '', false, '');
+            highlightAdvancedPopup('risks', 'texts/risks.txt', '', false, '');
+            highlightAdvancedPopup('separation of the private market and the state', 'texts/state.txt', '', false, '');
+            highlightAdvancedPopup('value', 'texts/value.txt', '', false, '');
+            highlightAdvancedPopup('failure', 'texts/failure.txt', '', false, '');
+            highlightAdvancedPopup('financial mechanisms', 'texts/mechanisms.txt', '', false, '');
+            highlightAdvancedPopup('unfinished', 'texts/unfinished.txt', '', false, '');
+            highlightAdvancedPopup('hereditary building right', 'texts/buildingright.txt', '', false, '');
 
-        // Fetch news data when the page loads
-        document.addEventListener("DOMContentLoaded", fetchNews);
+            // Fetch and animate news ticker
+            fetchNews();
+        });
     </script>
 </head>
 <body style="--spacing: 40px; margin: 0; padding: 0;">
     <div class="contact-link" onclick="showContactPopup()">contact</div>
     <div class="links-link" onclick="showLinksPopup()">links</div>
     <div class="content">
-        <h1 class="title-text">Elbturm. Baut ihn doch selbst.</h1> 
+        <h1 class="title-text">Elbturm</h1> 
         <p class="regular-text">
             In 2025, the city of Hamburg will grow by around 100,200 m2. These additional areas need to be developed. Hamburg will therefore invest 50 million euros to extend the city's infrastructure and ensure connections to electricity, water and sewage. These areas will be removed from speculation and become part of urban reality again.
 By building a façade, a protective layer is created. Behind it thus: air that can be used, space that can be owned.
