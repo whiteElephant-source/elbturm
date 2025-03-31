@@ -15,6 +15,47 @@
             font-weight: bold;
             overflow: hidden;
         }
+
+        /* Loader Overlay and Full-Bleed Video Background */
+        #loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: black; 
+            z-index: 9999;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #loader-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover; /* Ensures the video covers the viewport without borders */
+            z-index: 1;
+        }
+
+        /* Fullscreen Text Container with a Small Buffer */
+        .loader-text-container {
+            position: relative;
+            padding: 20px; /* Small buffer from the edges */
+            z-index: 2;
+            width: calc(100% - 40px);
+            text-align: center;
+        }
+
+        .loader-text {
+            color: white;
+            font-size: 2rem;
+            margin: 0;
+        }
+        
         .content {
             background: rgb(255, 0, 0);
             color: white;
@@ -174,6 +215,28 @@
 
     </style>
     <script>
+
+        window.addEventListener("load", function() {
+            const loaderOverlay = document.getElementById("loader-overlay");
+            const loaderText = document.querySelector(".loader-text");
+            const loaderVideo = document.getElementById("loader-video");
+    
+            // Fallback: if the video is missing or fails to load, show a black background.
+            loaderVideo.addEventListener("error", function() {
+                loaderOverlay.style.background = "black";
+                loaderVideo.style.display = "none";
+            });
+    
+            // Once everything is loaded, update the loader text to the second custom message.
+            loaderText.textContent = "the tower is still not finished";
+            loaderText.style.cursor = "pointer";
+    
+            // When the text is clicked, remove the loader overlay.
+            loaderText.addEventListener("click", function() {
+                loaderOverlay.style.display = "none";
+            });
+        });
+        
                 // Advanced Popup: Includes fetch for text, media, and additional text
         function highlightAdvancedPopup(word, fileUrl, mediaUrl = '', isVideo = false, additionalText = '') {
             var content = document.querySelector('.content');
@@ -588,6 +651,17 @@
     </script>
 </head>
 <body style="--spacing: 40px; margin: 0; padding: 0;">
+    <div id="loader-overlay">
+        <video id="loader-video" autoplay muted loop playsinline>
+            <!-- Replace "your-video.mp4" with your video source -->
+            <source src="loader.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="loader-text-container">
+            <p class="loader-text">is a failure is a failure is a failure is a failure is a failure is a failure is a failure is a failure is a failure is a failure is a failure is a failure is a failure is a failure is a failure is a failure is a failure</p>
+        </div>
+    </div>
+    
     <div class="contact-link" onclick="showContactPopup()">contact</div>
     <div class="links-link" onclick="showLinksPopup()">links</div>
     <div class="content">
