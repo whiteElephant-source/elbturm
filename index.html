@@ -212,14 +212,15 @@
         .news-content-wrapper {
             display: flex;
             overflow: hidden;
-            -webkit-animation: marquee 8s linear infinite;
-                    animation: marquee 8s linear infinite;
+            -webkit-animation: marquee 4s linear infinite;
+                    animation: marquee 4s linear infinite;
         }
 
         /* Make sure the content wraps without breaking */
         .news-content {
             display: inline-block;
             white-space: nowrap;
+            max-width: none;
         }
 
         a {
@@ -236,8 +237,8 @@
         }
         
         @keyframes marquee {
-          0% { transform: translateX(100%); }
-          100% { transform: translateX(-100%); }
+          0% { transform: translateX(50%); }
+          100% { transform: translateX(-50%); }
         }
 
     </style>
@@ -692,7 +693,7 @@
     <div class="contact-link" onclick="showContactPopup()">contact</div>
     <div class="links-link" onclick="showLinksPopup()">links</div>
     <div class="content">
-        <h1 class="title-text">is a failure a failure</h1> 
+        <h1 class="title-text">elbturm</h1> 
         <p class="regular-text">
             In 2025, the city of Hamburg will grow by around 100,200 m2. These additional areas need to be developed. Hamburg will therefore invest 50 million euros to extend the city's infrastructure and ensure connections to electricity, water and sewage. These areas will be removed from speculation and become part of urban reality again.
 By building a façade, a protective layer is created. Behind it thus: air that can be used, space that can be owned.
