@@ -211,7 +211,9 @@
         /* News content styling */
         .news-content-wrapper {
             display: flex;
-            animation: marquee 18s linear infinite; /* Default speed */
+            overflow: hidden;
+            -webkit-animation: marquee 18s linear infinite;
+                    animation: marquee 18s linear infinite;
         }
 
         /* Make sure the content wraps without breaking */
@@ -226,6 +228,16 @@
         }
         a:hover {
             text-decoration: italic !important;
+        }
+        
+        @-webkit-keyframes marquee {
+          0% { -webkit-transform: translateX(100%); transform: translateX(100%); }
+          100% { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
+        }
+        
+        @keyframes marquee {
+          0% { transform: translateX(100%); }
+          100% { transform: translateX(-100%); }
         }
 
     </style>
@@ -623,7 +635,7 @@
 
         
                 // Set the inner HTML of the news ticker
-                newsBanner.innerHTML = `<marquee class="news-content">${newsText}</marquee>`;
+                newsBanner.innerHTML = `<div class="news-content">${newsText}</div>`;
                 const contentWidth = document.querySelector('.news-content-wrapper').scrollWidth;
                 const containerWidth = document.getElementById('news-ticker').offsetWidth; // Get the width of the visible box
                 const animationSpeed = Math.max(15, (contentWidth / containerWidth) * 15); // Adjust speed proportionally
