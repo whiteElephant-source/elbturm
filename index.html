@@ -227,6 +227,18 @@
         a:hover {
             text-decoration: italic !important;
         }
+        @media (max-width: 600px) {
+          .popup {
+            width: 90vw;
+            max-width: 90vw;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            box-sizing: border-box;
+          }
+        }
+        
 
     </style>
     <script>
@@ -502,6 +514,8 @@
         }
 
         function startDrag(event, popup, closeButton) {
+            if ('ontouchstart' in window) return;
+            
             // Get the current popup rectangle
             var rect = popup.getBoundingClientRect();
             var offsetX = event.clientX - rect.left;
